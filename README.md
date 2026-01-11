@@ -5,9 +5,10 @@
 | info | links |
 | --- | --- |
 | Link | [Exam Guide](https://docs.aws.amazon.com/pdfs/aws-certification/latest/examguides/aws-certification-exam-guides.pdf) |
-| Length | Minutes |
-| Cost | $ |
+| Length | 170 Minutes |
+| Cost | $150 |
 | Passing Score | 720 |
+| Questions | 85 |
 | Schedule | [](Link) |
 
 ## Domain Overview
