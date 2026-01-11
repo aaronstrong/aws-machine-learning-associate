@@ -51,3 +51,8 @@ Skills in:
 * Identifying and mitigating sources of bias in data (for example, selection bias, measurement bias) by using AWS tools (for example, SageMaker Clarify)
 * Preparing data to reduce prediction bias (for example, by using dataset splitting, shuffling, and augmentation)
 * Configuring data to load into the model training resource (for example, Amazon EFS, Amazon FSx)
+
+----
+
+# My Notes
+
