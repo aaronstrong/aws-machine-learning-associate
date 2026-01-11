@@ -4,7 +4,7 @@
 
 | info | links |
 | --- | --- |
-| Link | [https://docs.aws.amazon.com/pdfs/aws-certification/latest/examguides/aws-certification-exam-guides.pdf](Exam Guide) |
+| Link | [Exam Guide](https://docs.aws.amazon.com/pdfs/aws-certification/latest/examguides/aws-certification-exam-guides.pdf) |
 | Length | Minutes |
 | Cost | $ |
 | Passing Score | 720 |
@@ -14,8 +14,8 @@
 
 | Domain | % of Exam |
 | --- | --- |
-| Domain 1: Data Preparation for Machine Learning (ML)| 28 % |
-| Domain 2: ML Model Development | 26 % |
-| Domain 3: Deployment and Orchestration of ML Workflows | 22% |
-| Domain 4: ML Solution Monitoring, Maintenance, and Security | 24% |
+| [Domain 1: Data Preparation for Machine Learning (ML)](./domain1/)| 28 % |
+| [Domain 2: ML Model Development](./domain2/) | 26 % |
+| [Domain 3: Deployment and Orchestration of ML Workflows](./domain3/) | 22% |
+| [Domain 4: ML Solution Monitoring, Maintenance, and Security](./domain4/) | 24% |
 
