@@ -19,4 +19,4 @@
 | [Domain 2: ML Model Development](./domain2/) | 26 % |
 | [Domain 3: Deployment and Orchestration of ML Workflows](./domain3/) | 22% |
 | [Domain 4: ML Solution Monitoring, Maintenance, and Security](./domain4/) | 24% |
-
+| [AWS Services](./aws-services/) | NA, list of AWS discussed |
