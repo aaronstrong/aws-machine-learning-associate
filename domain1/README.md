@@ -56,3 +56,79 @@ Skills in:
 
 # My Notes
 
+---
+# Data for Machine Learning Workloads
+
+* Tabular data
+* Image Data
+* Text Data
+* Time Series Data
+
+## Data Formats
+
+* Structured Data
+* Semi-structured data
+* Unstructured Data
+
+### Data File Types: Structured Data
+
+* Row-Based: Protobut or Avro recordIO
+* Column-based: Apache Parquet, ORC (Hive or Spike)
+
+### Semi-structure Data
+
+* Row-based: Microsoft Excel, CSV
+* Object-Notation: JSON, JSONL
+  * Example: JSON
+    ```json
+    [
+        {
+            "uniqueID": 111222,
+            "name": "Bob, Billy",
+            "age": 57,
+        }
+    ]
+    ```
+
+### Unstructure Data
+
+* Images: .png, .jpg
+* Video: .mp4, ogg, .webm
+* text: .txt
+
+## What makes Good Data?
+
+* Quantity
+  * Must have enough data to train and evalate your ML model
+* Quality
+  * Must have the 5 R's:
+    * Relevent
+    * Representative
+    * Rich
+    * Reliable
+    * Responsible
+
+## Data Storage services in AWS
+
+* Data Lake
+  * AWS S3 and [AWS Lake Formation](../aws-services/README.md)
+  * Data lakes can store structured, semi-structured, or unstructured data
+* Data Warehouse
+  * Amazon Redshift
+    * Redshift is a data warehouse that can store structure data optimized for business analytics
+* Relational Database
+  * AWS RDS
+    * Managed Relational database service
+    * Stores structured data in popular DB engines
+    * Used for:
+      * OLTP
+      * Web Applications
+      * Mobile Application
+      * PostgreSQL can be used for vector search
+* Non-relational Database
+  * Amazon DynamoDB
+    * Serverless NoSQL database
+    * Store semi-structured data in JSON-like items
+    * Single-digit millisecond latency at any scale
+    * Facilitates event-driven architectures with DynamoDB Streams
+
