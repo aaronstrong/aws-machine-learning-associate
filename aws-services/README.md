@@ -68,7 +68,7 @@ Happy HealthCare decided to use AWS Lake Formation ML Transforms to identify the
 * Defining S3 Lifecycle Management can be great for cost savings if your objects have predictable usage patterns.
 * Example:
   * Start with S3 Standard with a lifecycle management policy that says if objects have not been accessed for 30 days, move it to S3 Glacier Flexible Retrieval tier. Once in the S3 Glacier, can have another policy that purges after 180 days.
-  * S3 Bucket :bucket: :arrow_right: :snowflake: :wastebasket:
+  * S3 Bucket Standard :bucket: :arrow_right:---30days---:arrow_right: S3 Glacier Flex Retrieval :snowflake: :arrow_right:---180days---:arrow_right: :wastebasket:
 
 **Amazon Lake Formation for granular control**
 
