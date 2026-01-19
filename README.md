@@ -20,3 +20,8 @@
 | [Domain 3: Deployment and Orchestration of ML Workflows](./domain3/) | 22% |
 | [Domain 4: ML Solution Monitoring, Maintenance, and Security](./domain4/) | 24% |
 | [AWS Services](./aws-services/) | NA, list of AWS discussed |
+
+
+## Helpful Links
+
+* https://github.com/FabG/ml-aws-specialty-lab?tab=readme-ov-file
