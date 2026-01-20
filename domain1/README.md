@@ -108,7 +108,7 @@ Skills in:
     * Reliable
     * Responsible
 
-## Data Storage services in AWS
+## Data Storage Services in AWS
 
 * Data Lake
   * AWS S3 and [AWS Lake Formation](../aws-services/README.md)
@@ -131,4 +131,66 @@ Skills in:
     * Store semi-structured data in JSON-like items
     * Single-digit millisecond latency at any scale
     * Facilitates event-driven architectures with DynamoDB Streams
+
+## Dat Storage Services on AWS: Storage for ML
+
+* Amazon S3
+  * Most flexible of all the services
+  * Used as a data lake, intermediate data storage, and for training and evaluation data
+* Amazon Elastic Block Store (EBS)
+  * Block storage that is behind EC2.
+  * EBS is a scalable storage service purpose-built for use with EC2.
+  * You can scale the storage independent of the compute.
+  * Training data can be pre-loaded or streamed to EBS volumes
+* Amazon Elastic File System (EFS)
+  * EFS is a shared file system that can be mounted directly to Linux EC2 instance for training.
+  * Can be mounted to multiple instances for parallel processing
+* Amazon FSx for Lustre
+  * FSx Lustre can be directly mounted to EC2 training instances
+  * FSx is also backed by S3
+  * FSx can handle hundreds of gigabytes of throughput, and millions of IOPS for super-low-latency file retrieval
+
+### Deeper into S3
+
+* Storage Classes
+  * Know there are different storage classes for access levels, locations, and costs
+* S3 Lifecycle Management
+  * S3 lifecycle management is used to help reduce costs. Lifecycle management enabled, you can move objects between different S3 storage class tiers.
+  * Configure rules to move objects and even purge data.
+* AWS Lake formation
+  * AWS Lake formation is a managed service that centrally governs, secures, and manages data access to your data lake stored in Amazon S3. It provides a simplified, centralized, and fine-grained security model that replaces complex S3 bucket policies and IAM policies, enabling secure access for analytics and machine learning workloads.
+* S3 Events
+  * Automatically trigger event-drive workloads with S3 events
+  * IE: Trigger an event when a new .CSV file has been uploaded to an S3 bucket. Send the alert to EventBridge which can then trigger a Lambda function to validate or clean the data.
+* S3 Partitioning
+  * organize data within Amazon S3 into a hierarchical folder structure based on teh values of one or more objects metadata fields (eg: date, customer id, region).
+  * Crucial for optimizing the performance and reducing the cost of big data analytics queries by limiting the amount of data scanned.
+* S3 Gateway Endpoints
+  * Allows EC2 instances to access S3 bucket and objects without having to go over the public internet.
+  * A Gateway Endpoint is created in the Amazon VPC.
+  * This the cheapest, fastest, and more secure method to access a bucket.
+
+
+### Data Ingestion: Batch vs Streaming
+
+There are two ways to ingest data:
+1. Batch Ingestion
+2. Streaming Ingestion
+
+**Batch Ingestion**
+
+* This data arrives in batches, often one-time or on a recurring schedule. Used for historical data analysis and ML model training
+* Use tools like AWS DataSync to move files and objects
+* Use tools like AWS DMS to copy relational databases
+
+**Streaming Ingestion**
+* This data is continuously generated, consumed, and processed. Used for real-time analysis and ML inference streaming
+* Use AWS tools like Kineses Data Streams to stream data from mobile devices, IoT devices, live gaming data, etc, to an S3 bucket.
+  * For live processing and insights, use Amazon Managed Service for Apache Flink
+  * To deliver the data to different AWS services, use Kinesis Data Firehouse 
+
+
+---
+
+## Ingest and Store Data
 
