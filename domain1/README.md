@@ -90,7 +90,7 @@ Skills in:
     ]
     ```
 
-### Unstructure Data
+### Unstructured Data
 
 * Images: .png, .jpg
 * Video: .mp4, ogg, .webm
@@ -134,21 +134,37 @@ Skills in:
 
 ## Dat Storage Services on AWS: Storage for ML
 
-* Amazon S3
+* **Amazon S3**
   * Most flexible of all the services
   * Used as a data lake, intermediate data storage, and for training and evaluation data
-* Amazon Elastic Block Store (EBS)
+* **Amazon Elastic Block Store (EBS)**
   * Block storage that is behind EC2.
   * EBS is a scalable storage service purpose-built for use with EC2.
   * You can scale the storage independent of the compute.
   * Training data can be pre-loaded or streamed to EBS volumes
-* Amazon Elastic File System (EFS)
-  * EFS is a shared file system that can be mounted directly to Linux EC2 instance for training.
+* **Amazon Elastic File System (EFS)**
+  * EFS is a shared file system that can be mounted directly to Linux EC2 instances or containers for training.
   * Can be mounted to multiple instances for parallel processing
-* Amazon FSx for Lustre
+  * Uses the NFS v4 protocol
+  * Supports thousands of connections without impacting performance
+  * Not as cost effective as S3, and not as performant as FSx Lustre
+    * Because of cost and performance, generally only recommended for training data if the data already resides in EFS
+* **Amazon FSx for Lustre**
+  * Lustre is an open-source file system designed for HPC environments
+  * Can scale up to TB/s throughput and millions of IOPS
   * FSx Lustre can be directly mounted to EC2 training instances
   * FSx is also backed by S3
+    * Integrate and sync with S3 to deliver data faster for training
+    * leverages S3 for cost-effective cold storage
   * FSx can handle hundreds of gigabytes of throughput, and millions of IOPS for super-low-latency file retrieval
+  * FSx for Lustre has 2 other platforms it supports:
+    * **FSx Lustre NetApp ONTAP**
+      * Specifically for use with NetApp's ONTAP file system
+      * Provides an in-VPC access point to data loaded from an ONTAP server
+      * Uses S3 protocol for reads, NFS protocol for Writes
+    * **FSx for Windows File Server**
+      * Supports SMB protocol used by Windows Servers
+      * Only recommended if a shared file system is needed for Windows-based EC2 applications
 
 ### Deeper into S3
 
@@ -182,15 +198,88 @@ There are two ways to ingest data:
 * This data arrives in batches, often one-time or on a recurring schedule. Used for historical data analysis and ML model training
 * Use tools like AWS DataSync to move files and objects
 * Use tools like AWS DMS to copy relational databases
+* To keep Batch Ingestion Scalable:
+  * Automate data preprocessing with Step Functions or SageMaker Data Pipelines
+  * Leverage scalable managed services for processing like AWS Glue and SageMaker Data Wrangler
+  * Use Scheduled scaling (AWS Step Functions) for preprocessing steps that place on SageMaker or EMR
+    * AWS Step Function:
+      * A service to orchestrate event-driven steps from different Amazon Services
+        ![](https://docs.aws.amazon.com/images/step-functions/latest/dg/images/step-functions-example.png)
 
 **Streaming Ingestion**
 * This data is continuously generated, consumed, and processed. Used for real-time analysis and ML inference streaming
 * Use AWS tools like Kineses Data Streams to stream data from mobile devices, IoT devices, live gaming data, etc, to an S3 bucket.
   * For live processing and insights, use Amazon Managed Service for Apache Flink
-  * To deliver the data to different AWS services, use Kinesis Data Firehouse 
+  * To deliver the data to different AWS services, use Kinesis Data Firehouse
+  * To keep streaming ingestion scalable:
+    * Use `JSONL` file format to efficiently stream data with diverse structures
+    * If your Kinesis throughput is the bottleneck, increase the number of shards in your Kinesis stream
+    * Partition data dynamically as it is delivered to S3 using Kinesis Data Firehose
 
 
 ---
 
 ## Ingest and Store Data
+
+### Merging data from multiple sources
+
+| High operational overhead<br>Highly customizable<br>Code Heavy | <--- | ---> | Low Operational overhead<br>Less customizable<br>Code-light |
+| --- |  --- |  --- |  --- |
+| Amazon EMR | AWS Glue | Amazon SageMaker<br>Data Wrangler | AWS Glue DataBrew |
+| ![](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2QGO_tfSoRlZkkaBR-X61NgrdRmped6IMmQ&s) | ![](https://assets.streamlinehq.com/image/private/w_300,h_300,ar_1/f_auto/v1/icons/1/aws-glue-9ztw380gkkd1g54iwwsq7.png/aws-glue-g9i4j0s3igbjmai4vernz9.png?_a=DATAg1AAZAA0) | ![](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLoa3Zj2aWc5rGAMIDJ73wTDJBCGS56TMmRg&s) | ![](https://miro.medium.com/0*0ruq4bjF8zFGlV7f.jpeg) |
+
+**Amazon EMR**
+
+* A managed Hadoop cluster for running big data operations
+  * Hadoop an open-source data framework from Apache
+    * Data Preparation (ETL) - Use either Apache Spark or Hive
+    * Data Analysis - Use Spark MLlib or presto
+* Allows for simplified ETL for large amounts of data into and out of AWS data stores
+
+**ETL with AWS Glue**
+
+* AWS Glue Studio you can import from an S3 bucket, and then create Glue Data Catalogs
+* From the catalog, apply transformations to the data, and then export to another S3 bucket.
+* After data transformations have been applied and exported to a bucket, other applications like SageMaker (or Athena like diagram) can be used to read that second S3 bucket.
+  ![](https://d2908q01vomqb2.cloudfront.net/b6692ea5df920cad691c20319a6fffd7a4a766b8/2024/11/26/image1-7.jpg)
+
+**Amazon EMR vs AWS Glue**
+
+* Similarities
+  * Both solutions use `Apache Spark`
+* Differences
+  * Amazon EMR
+    * Amazon EMR has superior price-performance
+    * Uses the open-source ecosystem. Lots of plugins to use: Hive, presto, trino, hadoop
+  * Glue
+    * AWS Glue has superior operation efficiency
+    * More built-in features for data discovery, connectors, job monitoring, and orchestration
+
+
+**AWS Glue Databrew**
+
+* Is a visual data preparation tool that enables users to clean and normalize data without having to write any code. There are over 250 ready-made transformations to automate data preparation tasks, like filtering anomalies, converting data to standard formats, and correcting invalid values.
+* Define and reuse transformations
+* Here are some common data transformations used:
+  * Remove or replace missing values
+  * Combine datasets
+  * Create columns
+  * Filter Data
+  * Label Mapping
+  * Aggregate Data
+
+**Amazon SageMaker Data Wrangler vs Glue Databrew**
+
+| | Glue Databrew | SageMaker Data Wrangler |
+| --- | --- | --- |
+| Processing resources | serverless | serverless |
+| Visaulizations (built-in) | yes | yes |
+| Built-in Transformations | yes (250) | yes |
+| Custom transforms /<br>custom code | no | yes (Pandas, SQL, PySpark) |
+| Bias detection integration | no | yes (SageMaker Clarify) |
+| Feature Store Integration | no | yes (SageMaker Feature Store) |
+| Pipeline (CI/CD) | no | yes (SageMaker Pipelines) |
+
+
+## Data Transformation
 
