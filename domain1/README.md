@@ -10,9 +10,9 @@
 ## Task 1.1 Ingest and store data
 
 Knowledge of:
-* Data formats and ingestion mechanisms (for example, validated and non-validated formats, Apache Parquet, JSON, CSV, Apache ORC, Apache Avro, RecordIO)
-* How to use the core AWS data sources (for example, Amazon S3, Amazon Elastic File System [Amazon EFS], Amazon FSx for NetApp ONTAP)
-* How to use AWS streaming data sources to ingest data (for example, Amazon Kinesis, Apache Flink, Apache Kafka)
+* [Data formats](#data-formats) and [ingestion mechanisms](#data-ingestion-batch-vs-streaming) (for example, validated and non-validated formats, Apache Parquet, JSON, CSV, Apache ORC, Apache Avro, RecordIO)
+* How to use the core [AWS data sources](#data-storage-services-in-aws) (for example, Amazon S3, Amazon Elastic File System [Amazon EFS], Amazon FSx for NetApp ONTAP)
+* How to use AWS streaming data sources to ingest data (for example, [Amazon Kinesis](../aws-services/README.md#amazon-kinesis), [Apache Flink](../aws-services/README.md#managed-service-for-apache-flink), Apache Kafka)
 * AWS storage options, including use cases and tradeoffs
 
 Skills in:

@@ -3,10 +3,19 @@
 ### Table of Contents
 
 * Analytics
+  * [AWS Glue](#aws-glue)
+  * [AWS Glue Databrew](#aws-glue-databrew)
   * [AWS Lake Formation](#aws-lake-formation)
+  * [Amazon Kinesis](#amazon-kinesis)
+    * [Amazon Kinesis Data Streams](#kineses-data-streams)
+    * [Amazon Data Firehose](#amazon-data-firehose)
+    * [Amazon Managed Service for Apache Flink](#managed-service-for-apache-flink)
 * Storage
   * [Amazon S3](#amazon-s3)
+  * [Amazon EBS](#amazon-elastic-block-store-amazon-ebs)
+  * [Amazon EFS](#amazon-elastic-file-system-amazon-efs)
   * [Amazon FSx](#amazon-fsx)
+  * [Amazon Storage Gateway](#aws-storage-gateway)
 * Migration Services
   * [AWS DataSync](#aws-datasync)
   * [AWS DMS](#aws-database-migration-services-aws-dms)
@@ -14,6 +23,8 @@
 
 
 ## Analytics
+
+![](https://docs.aws.amazon.com/images/decision-guides/latest/analytics-on-aws-how-to-choose/images/analytics-services.png)
 
 
 ### AWS Glue
@@ -39,7 +50,38 @@
 * Map data lineage
 * Reuse defined transformations in automated processes
 
-### Kinesis Data Firehouse
+### Amazon Kinesis
+
+A platform for streaming data on AWS that makes it easy to load and analyze streaming data. Amazon Kinesis also enables you to build custom streaming data applications for specialized needs. With Kinesis you can ingest real-time data such as application logs, website clickstreams, IoT telemetry, and more into your databases, data lakes, and data warehouses. Kinesis enables you to process and analyze data as it arrives and respond in real-time instead of having to wait until your data is collected before the processing can begin.
+
+There are 4 pieces to Kinesis:
+
+* [Amazon Kinesis Data Streams](#kineses-data-streams) - enables you to build custom applications that process or analyze streaming data
+* Amazon Kinesis Video Streams - enables you to build custom applications that process or analyze streaming video
+* [Amazon Data Firehose](#amazon-elastic-block-store-amazon-ebs) - enables you to deliver real-time streaming data to AWS destinations like S3, Redshift, OpenSearch Services, and Splunk. Configure your data producers to send data to Amazon Data Firehose, and it automatically delivers the data to teh destinations that you specified. Can configure Firehose to transform your data before delivering it.
+* [Amazon Managed Service for Apache Flink](#managed-service-for-apache-flink) - enables you to process and analyze streaming data with standard SQL or with Java
+
+#### Kineses Data Streams
+
+<img src="https://docs.aws.amazon.com/images/streams/latest/dev/images/architecture.png" alt="Alt text" width="600" height="300">
+
+
+* Fully managed service to ingest data streams
+* Streams are split into shards (a shard is a uniquely identified sequence of data records in a stream. A stream is composed of 1 or more shards)
+  * Write up to 1 MB or 1000 records per second
+  * Read up to 2 MB or 2000 records per second for each shard
+  * If Kinesis is under performing, increase the number of shards
+* Default limit of 10,000 shards per stream, but there is technically no upper limit
+
+#### Amazon Data Firehose
+
+For Amazon S3 destinations, streaming data is delivered to your S3 bucket. if data transformation is enabled, you can optionally back up source data to another S3 bucket.
+
+<img src="https://docs.aws.amazon.com/images/firehose/latest/dev/images/fh-flow-s3.png" width="600" height="300">
+
+For Amazon Redshift destinations, streaming data is delivered to your S3 bucket first. Data Firehose then issues an Amazon Redshift **COPY** command to load data from your S3 bucket to your Redshift cluster. If data transformation is enabled, you can opitonaly back up source data to another S3 bucket.
+
+<img src="https://docs.aws.amazon.com/images/firehose/latest/dev/images/fh-flow-rs.png" width="600" height="300">
 
 * Deliver to integrated services like S3, Redshift, or Amazon OpenSearch service
 * Deliver to popular applications like Splunk, Snowflake, or a custom HTTP endpoint
@@ -47,11 +89,28 @@
 * Integrate with Lambda for custom transformations
 * Dynamically partition data delivered to S3
 
-### Managed Service for Apache Flink
+#### Managed Service for Apache Flink
+
+![](https://d1.awsstatic.com/Picture1.f8c5ecd75aae8cd14f6041541b55d5c5985487a6.f8c5ecd75aae8cd14f6041541b55d5c5985487a6.jpg)
+
+Apache Flink is an open-source, distributed engine for stateful processing over unbound (streams) and bounded (batches) data sets. Stream processing applications are designed to run continuously, with minimal downtime, and process data as it is ingested. Flink is designed for low latency processing, performing computations in-memory, for high availability, removing single point of failures, and to scale horizontally.
+
+**Why use Apache Flink**
+
+* **Event-driven applications**, ingesting events from one or more event streams and executing computations, state updates or external actions. Stateful processing allow implementing logic beying the Single Message Transformation, where the resutls depend on the history of the ingested events.
+* **Data Analytics applications**, extracting information and insights from data. 
+* **Data pipeline applications**, transforming and enriching data to be moved from one data storage to another. Traditionally, ETL is executed periodically, in batches. With Apache Flink, the process can operate continuously, moving the data with low latency to their destinations.
 
 * A way to live process and analyse data as it's streamed
 * Interactively query real-time data and generate continuous insights
 * Detect outliers and threshold breaches as early as possible
+
+### Amazon Managed Streaming for Apache Kafka (MSK)
+
+* Create Apache Kafka clusters from scratch or deploy your existing Kafka cluster to AWS
+* Optimized for capturing log and event streams
+* Native integrations with Kinesis family, EC2, Lambda, Redshift, and others
+* Typically only recommended over Kineses Data Streams in cases where your organization or application is already using Kafka
 
 ### [AWS Lake Formation](https://docs.aws.amazon.com/lake-formation/latest/dg/what-is-lake-formation.html)
 
@@ -90,6 +149,8 @@ Happy HealthCare decided to use AWS Lake Formation ML Transforms to identify the
 
 ## Storage
 
+![](https://docs.aws.amazon.com/images/whitepapers/latest/aws-overview/images/storage-services.png)
+
 ### Amazon S3
 
 **Storage Classes**
@@ -105,8 +166,6 @@ Happy HealthCare decided to use AWS Lake Formation ML Transforms to identify the
 | S3 Glacier Flexible Retrieval | long-lived archival data accessed once a year with retrieval times of minutes to hours |  11 9s% | 99.99% (after you store objects) | >=3| 90 days | Per-GB retrieval fees apply. You must first restore archived objects before you can access them |
 | S3 Glacier deep archive | long-lived archive data accessed less than once a year with retrieval times of hours | 11 9s% | 99.99% (after you store the object) | >=3 | 180 days | Per-GB retrieval fees apply. You must first restore acrhived objects before you can access them. |
 | Reduced Redundancy Storage (Not recommended) | Noncritical, frequently accessed data with ms access | 99.99% | 99.99% | >=3 | None | None|
-
-
 
 
 **S3 Lifecycle Management**
@@ -152,13 +211,49 @@ Happy HealthCare decided to use AWS Lake Formation ML Transforms to identify the
 
 ### Amazon FSx
 
-
+* Lustre is an open-source file system designed for HPC environments
+* Can scale up to TB/s throughput and millions of IOPS
+* FSx Lustre can be directly mounted to EC2 training instances
+* FSx is also backed by S3
+  * Integrate and sync with S3 to deliver data faster for training
+  * leverages S3 for cost-effective cold storage
+* FSx can handle hundreds of gigabytes of throughput, and millions of IOPS for super-low-latency file retrieval
+* FSx for Lustre has 2 other platforms it supports:
+  * **FSx Lustre NetApp ONTAP**
+    * Specifically for use with NetApp's ONTAP file system
+    * Provides an in-VPC access point to data loaded from an ONTAP server
+    * Uses S3 protocol for reads, NFS protocol for Writes
+  * **FSx for Windows File Server**
+    * Supports SMB protocol used by Windows Servers
+    * Only recommended if a shared file system is needed for Windows-based EC2 applications
 
 ### Amazon Elastic Block Store (Amazon EBS)
+
+* Block storage that is behind EC2.
+* EBS is a scalable storage service purpose-built for use with EC2.
+* You can scale the storage independent of the compute.
+* Training data can be pre-loaded or streamed to EBS volumes
 
 
 ### Amazon Elastic File System (Amazon EFS)
 
+* EFS is a shared file system that can be mounted directly to Linux EC2 instances or containers for training.
+* Can be mounted to multiple instances for parallel processing
+* Uses the NFS v4 protocol
+* Supports thousands of connections without impacting performance
+* Not as cost effective as S3, and not as performant as FSx Lustre
+  * Because of cost and performance, generally only recommended for training data if the data already resides in EFS
+
+
+### AWS Storage Gateway
+
+![](https://d2908q01vomqb2.cloudfront.net/e1822db470e60d090affd0956d743cb0e7cdf113/2020/05/04/Figure-2-High-level-architecture-of-storage-gateway.png)
+
+AWS Storage Gateway is a hybrid cloud storage service that connects on-premises environments with AWS cloud storage. It allows you to seamlessly integrate your existing on-premises architecture with AWS, enabling you to store and retrieve data from the cloud and run applications in a hybrid environment. For Windows workloads, you can use Storage Gateway to store and access data using native Windows protocols like SMB and NFS. You can use storage gateway to reduce costs associated with running Windows workloads on AWS by using on-premises hardware and software as a bridge to the cloud. This enables you to take advantage of the scalability and cost-efficiency of AWS without having to make significant changes to your existing infrastructure.
+
+Under the umbrella of Storage Gateway, you get Amazon S3 File Gateway, Amazon FSx File Gateway, Tape Gateway, and Volume Gateway.
+
+Uses a storage gateway appliances, a VM from Amazon - which is installed and hosted on your data center. After the setup, you can use the AWS console to provision your storage options: File Gateway, Cached Volumes, or Stored Volumns, in which data will be saved to S3. You can also purchase a hardware appliance to facilitate the transfer instead of a VM.
 
 
 ## Migration and Transfer
@@ -172,6 +267,7 @@ Happy HealthCare decided to use AWS Lake Formation ML Transforms to identify the
   * NFS, SMB, HDFS, object storage
 * Works with different AWS storage services:
   * S3, EFS, FSx for Windows File Server, FSx for Lustre, FSx for OpenZFS, FSx for NetApp ONTAP
+* Uses an agent which is a VM that is owned by the user and is used to read or write data from your storage systems. The agent will then read from a source location, and sync your data to S3, EFS, or FSx for Windows File Server.
 * Connecting your network for AWS DataSync
   * ![](https://docs.aws.amazon.com/images/datasync/latest/userguide/images/datasync-network-connection-diagram-overview.png)
 
@@ -182,22 +278,10 @@ Happy HealthCare decided to use AWS Lake Formation ML Transforms to identify the
 * Tool used to migrate relational databases, data warehouses, NoSQL databases, and other types of data stores.
 
 
-### Kineses Data Streams
-
-* Fully managed service to ingest data streams
-* Stream are split into shards
-  * Write up to 1 MB or 1000 records per second
-  * Read up to 2 MB or 2000 records per second for each shard
-  * If Kinesis is under performing, increase the number of shards
-* Default limit of 10,000 shards per stream, but there is technically no upper limit
 
 
 
 
 
-### Amazon Managed Streaming for Apache Kafka (MSK)
 
-* Create Apache Kafka clusters from scratch or deploy your existing Kafka cluster to AWS
-* Optimized for capturing log and event streams
-* Native integrations iwth Kinesis family, EC2, Lambda, Redshift, and others
-* Typically only recommended over Kineses Data Streams in cases where your organization or application is already using Kafka
+
