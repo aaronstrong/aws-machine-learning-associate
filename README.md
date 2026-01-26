@@ -25,3 +25,45 @@
 ## Helpful Links
 
 * https://github.com/FabG/ml-aws-specialty-lab?tab=readme-ov-file
+
+
+## ML LifeCycle Architecture diagrams
+
+
+![](https://docs.aws.amazon.com/images/wellarchitected/latest/machine-learning-lens/images/ml-lifecycle-phases-and-expanded-components.png)
+
+### Data Processing
+
+![](https://docs.aws.amazon.com/images/wellarchitected/latest/machine-learning-lens/images/data-processing-components.png)
+
+#### Data Collection
+
+![](https://docs.aws.amazon.com/images/wellarchitected/latest/machine-learning-lens/images/data-sources-ingestion-technologies.png)
+
+#### Data Preparation
+
+**Data Preprocessing**
+
+![](https://docs.aws.amazon.com/images/wellarchitected/latest/machine-learning-lens/images/data-processing-main-components.png)
+
+**Feature Engineering**
+
+![](https://docs.aws.amazon.com/images/wellarchitected/latest/machine-learning-lens/images/feature-engineering-main-components.png)
+
+### Model training and tuning
+
+![](https://docs.aws.amazon.com/images/wellarchitected/latest/machine-learning-lens/images/training-tuning-components.png)
+
+
+### Model evaluation
+
+![](https://docs.aws.amazon.com/images/wellarchitected/latest/machine-learning-lens/images/ml-lifecycle-preformance-evaluation-pipeline-added.png)
+
+### Deployment
+
+![]([](https://docs.aws.amazon.com/images/wellarchitected/latest/machine-learning-lens/images/deployment-architecture-diagram.png)
+
+
+### Monitor
+
+![](https://docs.aws.amazon.com/images/wellarchitected/latest/machine-learning-lens/images/ml-lifecycle-model-update-inference-pipelines.png)

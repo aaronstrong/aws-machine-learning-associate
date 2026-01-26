@@ -281,5 +281,79 @@ There are two ways to ingest data:
 | Pipeline (CI/CD) | no | yes (SageMaker Pipelines) |
 
 
-## Data Transformation
+## 1.2 Data Transformation & feature engineering
 
+### Cleaning Dirty Data
+
+**What Causes Dirty data**
+
+* Missing Data
+* Duplicated Data
+* Extreme Outliers
+* Inconsistent data types or formats
+
+**What Causes Dirty Data?**
+
+* Human error
+* Duplicate entries
+* Data integration
+* Lack of validation
+
+**Example of dirty data**
+
+* Has duplicates, blanks, mismatches, outliers
+
+| ID | Unit Price (USD) | Color | Units Sold |
+| --- | --- | --- | --- |
+| 1 | 15.00 | Green | 513 |
+| 2 | $25.00 | Yellow | 592 |
+| 3 | 12.50 | Red | 882 |
+| 3 | 12.50 | Red | 882 |
+| 4 | 19.75 |  | 952 |
+| 5 | 55.00 | Blue | 60000000 |
+| 6 |  | Purple | 255 |
+
+**Methods to clean dirty data**
+
+* Data Duplication
+  * AWS Services like Glue, Glue Databrew, SageMaker DataWranger - have functions that allow to de-duplicate dataset
+* Missing Data - Dropping Data
+  * Taking a row, like row 4, and dropping the entire record
+* Missing Data
+  * Imputing Data
+    * When we want to preserve as many rows/records and make a "best guess". Use imputing data.
+    * IE: row 6, we can calculate the average amongst all unit price and provide a new "best guess" value
+* Extreme Outliers
+  * Sometimes causes by bugs
+  * Can use imputation to replace the field, like id 5.
+  * But, it the outlier is correct, can git that outlier a reduce weight
+* Formatting
+  * Drop or transform the row to match others
+  * IE: row 2 has a `$`. Can reformat to match other columns.
+
+**Detecting and Addressing Outliers**
+
+* Best to detect these early in the pre-processing stage.
+* SageMaker Data Wrangler provides a scatter plot view, so quickly see where the outliers might be.
+  * ![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/studio/mohave/scatter-plot-facet.png)
+* We can also use `random cut forest` is an algorithm to use to detect anomalies. Some of the Amazon Analytics services can use this algorithm.
+
+### Engineering Features
+
+Feature normalization is a data preprocessing technique used to transform numeric features to a common scale, typically within the range of [0,1].
+
+**Feature Normalization (Min-Max) Scaling**
+
+This technique scales data to a fixed range, usually [0,1]. The formula involves subtracting the minimum value of a feature from each data point and dividing the range (maximum minus minimum). This is useful when the data distribution in not Gaussian (bell curve)
+
+**Feature Standardization (Z-score Normalization)**
+
+This method transforms the data to have a mean of 0 and standard deviation of 1. it is useful for handling outliers and is appropriate when the data is assumed to have a Gaussian distribution
+
+**Binning**
+
+Taking a graph of numbers and categorizing them and assigning a value to each category.
+
+**AWS Tools**
+
+* **Amazon SageMaker data Wrangler** is a feature prepartion tool within SageMaker suite that helps speed up data preparation and can be used to perform scaling and normalization.
