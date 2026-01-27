@@ -61,7 +61,7 @@
 
 ### Deployment
 
-![]([](https://docs.aws.amazon.com/images/wellarchitected/latest/machine-learning-lens/images/deployment-architecture-diagram.png)
+![](https://docs.aws.amazon.com/images/wellarchitected/latest/machine-learning-lens/images/deployment-architecture-diagram.png)
 
 
 ### Monitor

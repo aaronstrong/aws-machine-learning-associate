@@ -281,7 +281,7 @@ There are two ways to ingest data:
 | Pipeline (CI/CD) | no | yes (SageMaker Pipelines) |
 
 
-## 1.2 Data Transformation & feature engineering
+## 1.2 Data Transformation & Feature Engineering
 
 ### Cleaning Dirty Data
 
@@ -354,6 +354,112 @@ This method transforms the data to have a mean of 0 and standard deviation of 1.
 
 Taking a graph of numbers and categorizing them and assigning a value to each category.
 
-**AWS Tools**
+### AWS Tools
 
-* **Amazon SageMaker data Wrangler** is a feature prepartion tool within SageMaker suite that helps speed up data preparation and can be used to perform scaling and normalization.
+* **Amazon SageMaker Data Wrangler** is a feature prepartion tool within SageMaker suite that helps speed up data preparation and can be used to perform scaling and normalization.
+
+* **Amazon EMR**
+  * A managed cluster for running big data operations
+  * Allows for simplified ETL for large amounts of data into and out of AWS data stores
+  * Amazon EMR has high overhead, that it must be carefully be considered vs other AWS services like AWS Glue which has similar capabilities but different use cases.
+  * Amazon EMR is better priced vs Glue, but Glue has superior operational efficiency
+
+### Data Visualization and Exploration on AWS
+
+* **Data Analysts** use **AWS Glue Databrew** for data exploration, cleaning, visualization, and pre-processing. Defining data quality rules and mapping data lineage.
+* **Machine Learning Engineers** use **Amazon SageMaker Data Wrangler** for data exploration, visualization, and feature engineering for machine learning workloads.
+* **Amazon QuickSight** is a managed service for building advanced visual dashboards to share with stakeholders and users external to AWS.
+
+
+## Data Quality and Integrity
+
+At this stage we want to make sure our data is not bias
+
+**What is Bias?**
+
+* Any situation where results are skewed for or against an outcome for a particular class.
+* Bias originates in training data
+* Here are some common bias metrics
+  * Class Imbalance
+  * Difference in Proportions of Labels (DPL)
+  * Total Variation Distance (TVD)
+  * Kullback-Leibler Divergence (KL)
+
+**Class imbalance**
+
+* Class imbalance (CI) compares categories, or facets, to determine if a given facet it over- or under-represented in your data
+* A Class Imbalance value of 0 indicates equal representation, while a CI value near -1 or 1 is very imbalanced
+
+
+**Difference in proportions of labels (DPL)**
+
+* Difference in Proportion of labels (DPL) compares the observe outcomes of two facets
+* If the ratio of positive outcomes for these facets differs significantly in your training data, this could result in bias in your data.
+
+**Total Variation Distance (TVD)**
+
+* Total Variation Distance (TVD) compares the differences in outcome distribution for two facets in scenarios where the outcomes are binary, multicateogry or continuous.
+* It produces a values from 0 to 1 that indicates the ratio of facet a outcomes that would have to change for facet a to match facet b.
+
+**Kullback-Leibler Divergence (KL)**
+
+* Also know as relative entropy, measures the divergence of label distribution between two facets.
+* Values near 0 indicate similar distribution, larger values indicate larger divergence
+* You don't need to understand this one, but it may be a distractor on the exam
+
+### Mitigating Class Imbalance
+
+* **Synthetic Minority Oversampling Technique (SMOTE)**
+  * Synthesize instances of the minority class
+  * Only choose this option if the actual class-balanacd data is not available
+  * Superior to random undersampling techniques because there is no loss of data
+  * Adds more variance than random oversampling
+* **Generative Adversarial Network (GAN) Data Augmentation**
+  * This technique can address class imbalance in image data sets by generating image variations based on your training data.
+  * Two neural networks "compete", one trying to trick the other iwth synthesized images
+  * High quality fake images can then be added to your train data set
+
+
+### Securing Sensitive Data
+
+We'll want to secure sensitive data like SSN, financial data, secrets, PII, or address information.
+
+here are some services we can use:
+
+**Amazon Comprehend**
+
+* Natural Language Processing (NLP) service that can be used for sentiment analysis
+* Can be used to find and redact PII
+* Configure as an asynchronous batch job or real-time analysis
+
+**Amazon Macie**
+
+* Continuously scans S3 buckets for the presence of sensitive data like PII
+* Define rules to determine the severity of identified senstive data
+* Appears OFTEN as distractor
+
+**Amazon Lake Formation**
+
+* You can use Lake Formation with its IAM roles to mask sensitive data to prevent human access.
+* In Lake Formation you can configure granular IAM permissions on buckets
+
+### Encryption across data services
+
+Here we want to encrypt data in transit and at rest. Below are some of the common services and their encryption feature.
+
+**S3 Server-Side Encryption**
+
+1. **S3 Managed Keys-SSE-S3**
+   1. Default option
+   2. Each object is encrypted with a unique key
+   3. use AES 256-bit
+2. **KMS Keys (AWS or customer managed)-SSE-KMS**
+   1. Provides more granular control
+   2. View and edit control policies for individual keys
+   3. Follow individual key usage in AWS CloudTrail
+3. **Customer Provided Keys-SSE-C**
+   1. Least method used, but highest control
+   2. Customer has full control of the encryption keys
+
+## Finalizing Data for ML Workloads
+

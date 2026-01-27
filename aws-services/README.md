@@ -5,11 +5,15 @@
 * Analytics
   * [AWS Glue](#aws-glue)
   * [AWS Glue Databrew](#aws-glue-databrew)
+  * [Amazon EMR]()
   * [AWS Lake Formation](#aws-lake-formation)
   * [Amazon Kinesis](#amazon-kinesis)
     * [Amazon Kinesis Data Streams](#kineses-data-streams)
     * [Amazon Data Firehose](#amazon-data-firehose)
     * [Amazon Managed Service for Apache Flink](#managed-service-for-apache-flink)
+* Machine Learning
+  * [Amazon SageMaker](#amazon-sagemaker)
+  * [Amazon Mechanical Turk]()
 * Storage
   * [Amazon S3](#amazon-s3)
   * [Amazon EBS](#amazon-elastic-block-store-amazon-ebs)
@@ -145,6 +149,59 @@ Happy HealthCare decided to use AWS Lake Formation ML Transforms to identify the
 
 ![](https://github.com/aws-samples/aws-lakeformation-ml-transforms/raw/master/img/architecture.png)
 
+### [Amazon EMR](https://tutorialsdojo.com/amazon-emr/)
+
+* A managed cluster platform that simplifies running big data frameworks like Apache Hadoop and Apache Spark, on AWS to process and analyze vast amounts of data.
+* You can use EMR to transform and move large amounts of data into and out of other AWS data stores and databases
+
+#### Features
+
+* EMR notebooks provide a managed environment, based on Jupyter Notebooks, to help users prepare and visualize data, collaborate with peers, build apps, and perform interactive analysis using EMR clusters.
+* You can leverage multiple data stores, including S3, the Hadoop Distributed File System (HDFS), and DynamoDB.
+
+
+
+## Machine Learning
+
+### Amazon SageMaker
+
+
+#### SageMaker AutoPilot
+
+#### SageMaker GroundTruth
+
+* SageMaker Ground Truth helps manage human-in-the-loop tasks in your ML lifecycles
+* Assign internal teams or commission Mechanical Turk for data labeling tasks
+#### SageMaker Data Wranger
+
+#### SageMaker Studio
+
+#### SageMaker Notebooks
+
+#### SageMaker Pipelines
+
+#### SageMaker Model Monitor
+
+#### [SageMaker Feature Store](https://tutorialsdojo.com/amazon-sagemaker-feature-store/)
+
+* there are three modes that a feature store offers:
+  * **Online** - provides low-latecy feature access, making it suitable for high-throughput prediction applications.
+  * **Offline** - allows for batch processing of large datasets stored in the offline store. These datasets can be used for training models or performing batch inference. The offline store utilizes S3 for storage and supports data retrieval using Athena queries.
+  * **Online and Offline** - a combination of online and offline modes.
+* Support both streaming and batch data ingestion.
+  * Streaming Ingestion
+    * Streaming features allow you to continuously push new or updated feature data to the store in real-time.
+    * This is done by using the synchronous `Put Record` API, ensuring the latest feature values are always available.
+  * Batch Ingestion
+    * Allows you to use tools like SageMaker Data Wrangler to create features and then export a notebook that can be used to ingest the features in batches into a feature group.
+    * This method supports both offline and online ingestion, depending on the configuration of the feature group.
+
+#### SageMaker JumpStart
+
+### Amazon Mechanical Turk
+
+* is a crowdsourcing marketplace that connects you with an on-demand, scalable, human workforce to complete tasks.
+* This service could be used to help label data
 
 
 ## Storage
