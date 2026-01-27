@@ -163,6 +163,12 @@ Happy HealthCare decided to use AWS Lake Formation ML Transforms to identify the
 
 ## Machine Learning
 
+* ![](https://docs.aws.amazon.com/images/whitepapers/latest/accenture-ai-scaling-ml-and-deep-learning-models/images/ml-architecture.png)
+#### [Link](https://docs.aws.amazon.com/whitepapers/latest/accenture-ai-scaling-ml-and-deep-learning-models/ml-architecture-on-aws.html)
+
+* ![](https://substackcdn.com/image/fetch/$s_!QDEg!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7c644199-33a7-439a-af31-e88548f1f519_1139x883.png)
+#### [Link](https://www.dataopslabs.com/p/aws-sagemaker-reference-architecture)
+
 ### Amazon SageMaker
 
 
@@ -207,6 +213,9 @@ Happy HealthCare decided to use AWS Lake Formation ML Transforms to identify the
 ## Storage
 
 ![](https://docs.aws.amazon.com/images/whitepapers/latest/aws-overview/images/storage-services.png)
+
+![](https://d2908q01vomqb2.cloudfront.net/fc074d501302eb2b93e2554793fcaf50b3bf7291/2023/07/06/Fig1-hybrid-data-access-strategy.png)
+##### [Link](https://aws.amazon.com/blogs/architecture/designing-a-hybrid-ai-ml-data-access-strategy-with-amazon-sagemaker/)
 
 ### Amazon S3
 
