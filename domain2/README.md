@@ -60,3 +60,109 @@ Skills in:
 * Comparing the performance of a shadow variant to the performance of a production variant
 * Using SageMaker Clarify to interpret model outputs
 * Using SageMaker Model Debugger to debug model convergence
+
+---
+
+# My Notes
+
+![](https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2025/11/17/ml-17163-img.png)
+
+![](https://d2908q01vomqb2.cloudfront.net/fc074d501302eb2b93e2554793fcaf50b3bf7291/2022/02/10/Figure-2.-Managed-AWS-AI-services.jpg)
+
+
+## Choose a modeling approach
+### Vision
+
+| Subject | Overview | Use Cases |
+| --- | --- | --- |
+| Amazon Rekognition | * Easy API that can analyze image or video files sotred in S3<br>*Add features that detect objects, text, unsafe content, analyze images/videos, compare faces | * User verification<br>* Cataloging<br>* People Counting<br>* Public Safety |
+| Amazon Textract | * Add document and text detection and analysis to your apps<br>* Extract text, forms, and tables from documents with structured data<br>* Process invoices and reciepts<br>* Process ID docs like drivers licenses| - |
+
+### Language
+
+| Subject | Overview | Use Cases |
+| --- | --- | --- |
+| Amazon Comprehend | Analyze text data, uses natural language processing (NLP<b>*Comprehend can find insights from Built-in classifications like spam detection, Sentiment Analysis, Entity Recognition, Idenity and redact PII) | - |
+| Amazon Translate | A text translation service to provide high-quality translation on demand | * Enable multilingual user experiences in your apps<br>* Process and manage your company's incoming data like analyze text or social media feeds |
+
+### Speech
+
+| Subject | Overview | Use Cases |
+| --- | --- | --- |
+| Amazon Polly | Text-to-speech | - |
+| Amazon Transcribe | Speech-to-text | - |
+
+### Chatbots
+
+| Subject | Overview | Use Cases |
+| --- | --- | --- |
+| Amazon Lex | Same technology that powers Alexa. Converts speech to text to build chat bots | * Chatbots<br>* Voice Assistance |
+
+### Forecasting
+
+| Subject | Overview | Use Cases |
+| --- | --- | --- |
+| Amazon Forecast | - | - |
+
+### Search
+
+| Subject | Overview | Use Cases |
+| --- | --- | --- |
+| Amazon Kendra | Intelligent enterprise search service. Uses machine learning to search unstructured data. Can work with S3 and Lex | - |
+
+
+### Problem framing your ML solution
+
+* What is the nature of your problem?
+* What kind of data is available for training
+* Which machine learning algorithms are most appropriate for your use case?
+
+**Supervised Learning**
+
+This model trains on data that has the input and correct outputs (labels). Relies heavily on correct labels. use cases are image classification and spam detection. 
+
+**Unsupervised Learning (Unlabeled Data)**
+
+The model trains on unlabeled input data to find patterns and groups. Use if your inputs that are not labeled. Use cases are csutomer segmentation and anomaly detection.
+
+**Semi-Supervised Learning**
+
+The model creates its own labels based on the data throught tasks like predicting missing information. use if you have a small amout of partiially labeled data with a large amount of unlabeled data.
+
+**Reinforcement Learning**
+
+Enforcing models to make decisions. The algorithm of this method helps the model learn based on feedback. Use cases are self-driving cars.
+
+### [Amazon SageMaker AI built-in algorithms and when to apply them](https://docs.aws.amazon.com/sagemaker/latest/dg/algos.html)
+
+| Learning paradigm or domain | Problem Types | Examples & Use cases | Data input format | Built-in Algorithms |
+| --- | --- | --- | --- | --- |
+| Pre-trained models and pre-built solution templates | Image Classification<br>Tabular Classification<br>Text Classification<br>Image Embedding | Here | - | - |
+| Supervised Learning | Time-series Forecasting | Based on historical data for behavior; predict future behavior: predict sales on a new product | Tabular | [SageMaker AI DeepAR forecasting algorithm](https://docs.aws.amazon.com/sagemaker/latest/dg/deepar.html) |
+| Supervised Learning | Embeddings: convert high dimensinal objects into dimensional space | Improve the data embeddings of the high-dimensional objects: identify duplicate support tickets or find the correct routing based on similiarity of text in the tickets | Tabular | Object2Vec |
+| Supervised Learning | Regression | Predict a numeric/continuous value: estimate the value of a house | Tabular | Factorization machines algorithm<br>**K-Nearest Neighbors (k-NN)**<br>**LightGBM**<br>TabTransformer<br>**XGBoot**<br>**Linear Learner** |
+|Supervised Learning | Binary/multi-class classification | Predict if an item belongs to a category: email spam filter | Tabular | Factorization machines algorithm<br>k-nearest neighbors<br>LightGBM<br>TabTransformer<br>XGBoost<br>Linear Learner |
+
+**[K-Nearest Neighbors (k-NN)](https://docs.aws.amazon.com/sagemaker/latest/dg/k-nearest-neighbors.html)**
+
+* Determines a value based on the average of values from its nearest neighbors.
+* Ideal for low-dimensional data where the relationship between features and output is complex
+* Can be used for regression for classification
+
+**LightGBM**
+
+* Can be used for regression and classification
+* Efficently handles high-dimensional data sets with millions of rows
+
+**XGBoost**
+
+* Stands for eXtreme Gradient Boosting
+* Gradient boosting involves generating predictions by combining estimates from serveral simpler models
+* Efficient and robust algorithm for regression or classification problems
+* Highly tunable hyperparameter setting
+* is a very popular open source tool
+
+**Linear Learner**
+
+* Linear learner is a simple algorithm for regression and classification problems.
+* Applies a linear function to define a trend or thresholds

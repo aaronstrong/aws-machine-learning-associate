@@ -463,3 +463,37 @@ Here we want to encrypt data in transit and at rest. Below are some of the commo
 
 ## Finalizing Data for ML Workloads
 
+### Validate your data quality
+
+* When data is going from a data warehouse or data lake, how do we trust the quality of the data?
+  * **AWS Glue Databrew** is a tool Data Engineers and Analysts can use to define data quality with rules they implement.
+    * [Glue Databrew Quality Rules](https://aws.amazon.com/blogs/big-data/enforce-customized-data-quality-rules-in-aws-glue-databrew/)
+      * ![](https://d2908q01vomqb2.cloudfront.net/b6692ea5df920cad691c20319a6fffd7a4a766b8/2021/11/24/BDB-1924-image003.png)
+      * Here's an example Rule to check for **no duplicate rows**
+        * ![](https://d2908q01vomqb2.cloudfront.net/b6692ea5df920cad691c20319a6fffd7a4a766b8/2021/11/24/BDB-1924-image008-500.png)
+      * Here's an example rule to check for **unique employee ID, email, and SSN**
+        * ![](https://d2908q01vomqb2.cloudfront.net/b6692ea5df920cad691c20319a6fffd7a4a766b8/2021/11/24/BDB-1924-image009-500.png)
+
+### Detectinga nd Addressing Bias in Training Data
+
+* Bias is any situation where results are skewed for or against an outcome for a particular class
+* Bias originates in training data
+* We can mitigate bias by observing bias metrics derived from our training data
+
+**SageMaker Clarify**
+
+* SageMaker Clarify is used to detect bias and explain machine learning and Gen AI models
+* Provides features to help build less biased and more explainable models
+* Generates model governance reports for analysis by external teams or auditors
+* Detects bias by running a SageMaker Clarify processing job on your data
+* Monitors and detects data drift
+
+### Choosing an input mode and storage unit
+
+![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/sagemaker-training-choose-mode-and-storage.png)
+
+* **File Modes**: The entire training dataset is first downloaded from the data source, S3, to the lcoal EBS volume of the training instance before training beings. Suitable for smaller datasets or when the entire dataset needs to be cached locally.
+* **Pipe mode**: This mode streams data directly from Amazon S3 to the training algorithm container as it is being processed,without waiting for the entire dataset to download. This approach can reduce training startup time and the required local storage space, and is best for large datasets.
+* **FastFile Mode**: An enhanced version of File Mode that leverages a high-throughput file system for faster data loading.
+* **FSx for Lustra**: This option allows you to use a high-performance, POSIX-compliant file system for training data, which is ideal for workload that need very fast access to data.
+* **Amazon Elastic File System (EFS)**: This provides a simple, serverless, set-and-forget elastic file system that can be accessed by multiple training instances, useful for shared datasets.
