@@ -67,3 +67,27 @@
 ### Monitor
 
 ![](https://docs.aws.amazon.com/images/wellarchitected/latest/machine-learning-lens/images/ml-lifecycle-model-update-inference-pipelines.png)
+
+---
+
+Amazon SageMaker AI Model Training
+
+## Basic architecture of SageMaker Training
+
+![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/sagemaker-training.png)
+
+### High Level overview SageMaker Training Workflow and Features
+
+![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/training-main.png)
+
+#### Before Training
+
+![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/training-before.png)
+
+#### During Training
+
+![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/training-during.png)
+
+#### After Training
+
+![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/training-after.png)
