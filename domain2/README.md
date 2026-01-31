@@ -142,6 +142,14 @@ Enforcing models to make decisions. The algorithm of this method helps the model
 | Supervised Learning | Embeddings: convert high dimensinal objects into dimensional space | Improve the data embeddings of the high-dimensional objects: identify duplicate support tickets or find the correct routing based on similiarity of text in the tickets | Tabular | Object2Vec |
 | Supervised Learning | Regression | Predict a numeric/continuous value: estimate the value of a house | Tabular | Factorization machines algorithm<br>**K-Nearest Neighbors (k-NN)**<br>**LightGBM**<br>TabTransformer<br>**XGBoot**<br>**Linear Learner** |
 |Supervised Learning | Binary/multi-class classification | Predict if an item belongs to a category: email spam filter | Tabular | Factorization machines algorithm<br>k-nearest neighbors<br>LightGBM<br>TabTransformer<br>XGBoost<br>Linear Learner |
+| Unsupervised Learning | Feature Engineering: dimensionality reduction | Drop those columns from a dataset that have a weak relation with the label/target variable: the color of a car when predicting its mileage | Tabular | Principal Component Analysis (PCA) Algorithm |
+| Unsupervised Learning | Anomaly Detection | Detect abnormal behavior in applications: spot when an IoT sensor is sending abnormal readings | Tabular | Random Cut Forest (RCF) Algorithm |
+| Unsupervised Learning | Clustering or Grouping | Group similar objects/data together: find high-, medium-, and low-spending customers from their transaction histories | Tabular | K-Means Algorithm |
+| Unsupervised Learning | Topic Monitoring | Organize a set of documents into topics (not known in advance): tag a document as belonging to a medical category based on the terms used in the document | Text | Latent Dirichlet Allocation (LDA) Algorithm<br>Neural Topic Model (NTM) Algorithm |
+| Text Analysis | Speech-to-text | Convert audio files to text; transcribe call center conversations for further analysis | Text | [Sequence-to-Sequence Algorithm](https://docs.aws.amazon.com/sagemaker/latest/dg/seq-2-seq.html) |
+| Text Classification | Assign pre-defined categories to documents in a corpus: categorized books in a library into academic disciplines | Text | Blazing Text Algorithm<br>Text Classification - TensorFlow |
+| Image Processing | Image and multi-label classification | Label/tag an image based on the content of the image: alerts about adult content in an image | Image | Image Classification - MXNet |
+| Image Processing | Object Detection | Detect people and objects in an image: police review a large photo gallery for a missing person; autonomous vehicle object detection; detecting anomalies in medical images | Image | Image Detection - MXNet<br>Object Detection - TensorFlow |
 
 **[K-Nearest Neighbors (k-NN)](https://docs.aws.amazon.com/sagemaker/latest/dg/k-nearest-neighbors.html)**
 
@@ -166,3 +174,99 @@ Enforcing models to make decisions. The algorithm of this method helps the model
 
 * Linear learner is a simple algorithm for regression and classification problems.
 * Applies a linear function to define a trend or thresholds
+
+**Latent Dirichlet Allocation (LDA) Algorithm**
+
+* Latent - existing, but not yet developed or manifest
+* Allocation - setting apart or earmarking for a particular purpose
+* LDA is ideal when you want to categorize text documents without knowing the categories in advance
+
+**[TensorFlow Machine Learning Framework](https://docs.aws.amazon.com/sagemaker/latest/dg/text-classification-tensorflow.html)**
+
+* TensorFlow is an open-source machine learning framework developed by Google.
+* Used for neural networks, computer vision, natural language processing (NLP) and more
+* SageMaker supplies many pre-trained TensorFlow models which can be modified with fine-tuning
+
+## How to consider interpretability during model selection or algorithm selection
+
+The trade-off between model complexity and interpretability centers on balancing a model’s ability to capture intricate patterns in data versus how easily humans can understand its decision-making.
+
+| Algorithm Class | Intrinsic Interpretability | Pros | Cons |
+| --- | --- | --- | --- |
+| Linear Models | High | Simple, fast training, direct coefficient, interpretation | May oversimplify complex relationships, performance can be limited |
+| Decision Trees | High | Intuitive rule-based logic (If/then statements). Easy to visualize for small trees. | Prone to overfitting, often less accurate than ensembles |
+| Ensembles Method | Medium (Feature Important) | High performance, robust | The ensemble of trees makes the overall decision path hard to follow. Provide only global feature importance |
+| Neural Networks (Deep Learning) | Low | High performance on complex data (images, text, speech) | "Black box" nature; decisions are highly abstract and non-linear |
+
+### [Fairness, model explainability and bias detection with SageMaker Clarify](https://docs.aws.amazon.com/sagemaker/latest/dg/clarify-configure-processing-jobs.html)
+
+You can use Amazon SageMaker Clarify to understand fairness and model explainability and to explain and detect bias in your models. You can configure an SageMaker Clarify processing job to compute bias metrics and feature attributions and generate reports for model explainability. SageMaker Clarify processing jobs are implemented using a specialized SageMaker Clarify container image. 
+
+#### What is fairness and model explainability for machine learning predictions?
+
+Machine learning (ML) models are helping make decisions in domains including financial services, healthcare, education, and human resources. Policymakers, regulators, and advocates have raised awareness about the ethical and policy challenges posed by ML and data-driven systems. Amazon SageMaker Clarify can help you understand why your ML model made a specific prediction and whether this bias impacts this prediction during training or inference. SageMaker Clarify also provides tools that can help you build less biased and more understandable machine learning models.
+
+#### How SageMaker Clarify Processing Jobs Work
+
+You can use SageMaker Clarify to analyze your datasets and models for explainability and bias. You can run a SageMaker Clarify processing job at multiple stages in the lifecycle of the machine learning workflow. SageMaker Clarify can help you compute the following analysis types:
+
+* Partial Dependence Plot (PDP) which can help you understand how much your predicted target variable would change if you varied the value of one feature.
+* Pre-, Post-training bias metrics. These metrics can help you understand the bias in your data so that you can address it and train your model on a more fair dataset.
+
+
+### SageMaker JumpStart
+
+![](https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/11/27/all_solutions-1024x522.png)
+
+* Quickly deploy pre-trained open-source models
+* Leverages SageMaker automatic model tuning for hyperparameter tuning
+* Allows for automated fine-tuning and deployment
+* Generates a Jupyter notebook that is fully customizable
+* Allows for fine-tuning using custom data set
+
+#### Pre-trained Models: Deep learning and CNNs
+
+* Object Detection
+* Image Classification
+* Semantic Segmentation
+* Text Classification
+
+These pre-trained models leverage open-source frameworks: TensorFlow, PyTorch and MXNet
+
+#### Pre-trained Models: Classification and Regression
+
+* Tabular classification
+* Tabular regrestion
+
+Leverage pre-trained models using LightGBM, CatBoost, XGBoost, and Linear Learner.
+All pre-trained models from SageMaker JumpStart support **fine-tuning with custom datasets**
+
+### Amazon Bedrock
+
+* **Key Features**:
+  * **Model choice**: Bedrock provides access to a variety of foundation models.
+  * **Serverless**: No infrastructure to manage
+  * **Customize**: You can customize the models with your data using techniques like fine-tuning and RAG
+* **Capabilities**:
+  * **Text, Image, and Chat Playground**: Bedrock provides a playground for text, chat, and image models. In these playgrounds you can experiment with models. **Note**: this playground is called *Bedrock Playground*
+  * **API**: A detailed API is available that includes actions and their parameters
+
+### Assessing Model Costs
+
+5 Main Drivers of Cost in SageMaker
+
+1. Instance Types
+   1. More complex models require higher CPU
+2. Data Storage
+   1. Depends on the size and outputs of data
+   2. More complex models require more size
+3. Training Time
+   1. Time it takes to train.
+   2. Complex models can take months
+4. Endpoints
+   1. Real-time endpoint or batch
+5. Data Transfer
+   1. Transfering data from S3 to SageMaker. More data, more cots
+
+## Train and refine models
+
