@@ -270,3 +270,119 @@ All pre-trained models from SageMaker JumpStart support **fine-tuning with custo
 
 ## Train and refine models
 
+
+
+
+### Underfitting vs Overfitting
+
+![](https://docs.aws.amazon.com/images/machine-learning/latest/dg/images/mlconcepts_image5.png)
+
+Understanding model fit is important for understanding the root cause for poor model accuracy. 
+
+* **Underfitting**
+  * Your model is underfitting the <u>training data</u> when the model performs poorly on the training data. This is because the model is unable to capture the relationship between the input examples (often called X) and the target values (often called Y).
+  * Might be because the training data is too simple (the input features are not expressive enough) to describe the target well.
+  * To improve, by increasing model flexibility by:
+    * Add new domain-specific features and more feature Cartesian productions, and change the types of features processing used
+    * Decrease the amount of regularization used, which is flatten data
+    * add layers to neural network
+    * consider a more complex model
+* **Overfitting**
+  * Overfitting is when the model performs well on the training data but does not perform well on the evaluation data. This is because the model is memorizing the data it has seen and is unable to generalize to unseen examples.
+  * Do the following to improve:
+    * Feature selection: consider using fewer feature combinations, decrease n-grams size, and decrease the number of numeric attributes bins.
+    * Increase the amount of regularization used
+    * Ensure that your training data set is diverse and representative
+    * Apply dropout to your neural network
+
+### Factors for Model performance and size
+   * Algorithmic complexity
+   * Number of parameters
+   * Input data size
+   * Quantization
+   * Regularization
+   * Hyperparameter Tuning
+
+#### Quantization
+
+* Compress models and reduction computation by reducing the precision of numerical values
+* Round 32-bit floating point values into lower-preceision data types like 16-bit floating point or 8-bit integers
+* This can reduce the memory needs as well as improve the computational efficiency of your model
+
+#### Regularization
+
+* Regularization indirectly effects the size of your model by effectively reducing the weight of parameters
+* Two types: L1 and L2
+* This technique can be useful when dealing with high-dimensional data sets
+
+#### Hyperparameter Tuning
+
+* Hyperparameters are the tunable settings that determine how a machine learning model learns
+* Some settings can affect model size and performance
+  - Learning rate
+  - Batch Size
+  - Number of layers and neurons (neural network)
+  - Dropout rate
+
+
+### Methods to reduce model training time
+
+**Early Stopping**
+
+* Detects validation loss and can stop training when the model begins to overfit
+
+
+**Distributed Training**
+
+* Distributed training is ideal for deep learning tasks such as computer vision and natural language processing
+* Uses SageMaker AI's distributed training libraries or packages such as PyTorch distributedDataParrallel (DDP)
+* Perfect use case for FSx for Lustre
+
+
+**SageMaker AI Managed Warm Pools**
+
+* keep training instances warm for a specified period of time after completing training
+* reduct job startup times by 8x
+
+### Benefits of regularization techniques (for example, dropout, weight decay, L1 and L2)
+
+* Regularization mitigates the effect of weighted outliers. In the case of training ML models, this means redistributing the weight your model gives to particular features or neurons
+  * **Underfitting**
+    * If your model is underfitting, you may need to decrease regularization
+  * **Overfitting**
+    * If your model is overfitting, you may need to increase regularization
+
+#### L1 Regularization
+
+* L1 identifies the least influential features and sets their model weights to zero
+* Useful when you need to reduce the number of features in a large data set
+* Not recommended when you want to retain influence from all features in your data
+
+#### L2 Reg
+
+* Proportionally reduces the weights of the largest model weights
+* Unlike L1, L2 does not reduce any weights to zero
+* ideal if you need to reduce overfitting, but all features are contributing to your predictions
+
+### Hyperparameter tuning techniques (for example, random search, Bayesian optimization)
+
+* Hyperparameters are the tunable settings that determine how a machine learning model learns
+* Some settings can affect model seize nad performance:
+  - Learning Rate
+  - Batch Size
+  - Number of layers and neurons (neural networks)
+  - Dropout rate
+
+#### Hyperparameter Tuning
+
+* Hyperparameter tuning is an iterative process that involves experimenting with different hyperparameters to optimize for particular outcome, such as maximizing model accuracy, or optimizing the loss function
+* This process can be manual or automated
+* Common Hyperparameters
+  * Epochs
+  * Neural network nodes and layers
+  * batch size
+  * regularization
+  * maximum depth
+  * learning rate
+
+
