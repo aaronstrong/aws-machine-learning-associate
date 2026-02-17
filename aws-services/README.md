@@ -14,6 +14,7 @@
 * Machine Learning
   * [Amazon SageMaker](#amazon-sagemaker)
   * [Amazon Mechanical Turk]()
+  * [Amazon TextTract]()
 * Storage
   * [Amazon S3](#amazon-s3)
   * [Amazon EBS](#amazon-elastic-block-store-amazon-ebs)
@@ -169,6 +170,17 @@ Happy HealthCare decided to use AWS Lake Formation ML Transforms to identify the
 * ![](https://substackcdn.com/image/fetch/$s_!QDEg!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7c644199-33a7-439a-af31-e88548f1f519_1139x883.png)
 #### [Link](https://www.dataopslabs.com/p/aws-sagemaker-reference-architecture)
 
+### Amazon Bedrock
+
+* Amazon Bedrock is a fully managed service that provides a unified API to access popular foundation models (FMs). Amazon Bedrock supports image generation models from providers such as Stability AI or AWS.
+* You can use Amazon Bedrock to consume FMs through a unified API without the need to train, host, or manage ML models. This is the most suitable solution for a company that does not want to train or manage ML models for image generation.
+
+
+### Amazon Comprehend
+
+*  Amazon Comprehend is a natural language processing (NLP) service that can extract insights and relationships from text data. You cannot use Amazon Comprehend to process textual information from images that are provided in PNG format. Amazon Comprehend requires text as input.
+*  
+
 ### Amazon SageMaker
 
 
@@ -178,7 +190,18 @@ Happy HealthCare decided to use AWS Lake Formation ML Transforms to identify the
 
 * SageMaker Ground Truth helps manage human-in-the-loop tasks in your ML lifecycles
 * Assign internal teams or commission Mechanical Turk for data labeling tasks
-#### SageMaker Data Wranger
+  
+
+#### SageMaker Data Wrangler
+
+
+#### SageMaker JumpStart
+
+* JumpStart provides pretrained, open-source models for a wide range of problem types to help you get started.
+* JumpStart also provides solution templates that set up infrastructure for common use cases, and executable example notebooks for machine learning with SageMaker AI.
+* SageMaker JumpStart offers state-of-the-art foundation models for use cases such as content writing, code generation, question answering, copywriting, summarization
+
+
 
 #### SageMaker Studio
 
@@ -186,7 +209,28 @@ Happy HealthCare decided to use AWS Lake Formation ML Transforms to identify the
 
 #### SageMaker Pipelines
 
+#### SageMaker Model Cards
+
+* Use Amazon SageMaker Model Cards to document critical details about your machine learning (ML) models in a single place for streamlined governance and reporting. Catalog details such as the intended use and risk rating of a model, training details and metrics, evaluation results and observations, and additional call-outs such as considerations, recommendations, and custom info.
+
+#### SageMaker Model Dashboard
+
+* Amazon SageMaker Model Dashboard is a centralized portal, accessible from the SageMaker AI console, where you can view, search, and explore all of the models in your account. You can track which models are deployed for inference and if they are used in batch transform jobs or hosted on endpoints.
+
 #### SageMaker Model Monitor
+
+* Amazon SageMaker Model Monitor monitors the quality of Amazon SageMaker AI machine learning models in production. 
+* Set alerts that notify you when there are deviations in the model quality. 
+* ![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/model_monitor/mmv2-architecture.png)
+
+
+#### SageMaker Role Manager
+
+* Machine Learning (ML) administrators striving for least-privilege permissions with Amazon SageMaker AI must account for diversity of industry perspectives, including the unique least-privilege access needs required for personas such as data scientists, machine learning operation (MLOps) engineers and more. Use Role Manager to build and manage persona-based IAM roles for common machine learning needs directly through the Amazon SageMaker AI console.
+* SageMaker Role Manager provides 3 preconfigured role personas and predefined permissions for common ML activities:
+  1. Data Scientist Persona
+  2. MLOps Persona
+  3. SageMaker AI compute Persona
 
 #### [SageMaker Feature Store](https://tutorialsdojo.com/amazon-sagemaker-feature-store/)
 
@@ -209,6 +253,21 @@ Happy HealthCare decided to use AWS Lake Formation ML Transforms to identify the
 * is a crowdsourcing marketplace that connects you with an on-demand, scalable, human workforce to complete tasks.
 * This service could be used to help label data
 
+### Amazon Kendra
+
+* Amazon Kendra is an intelligent search service that uses semantic and contextual understanding to provide relevant responses to a search query. You cannot use Amazon Kendra to detect and extract text, handwriting, and data from invoice images.
+
+### Amazon Polly
+
+* Amazon Polly is a text-to-speech (TTS) service that can convert text into lifelike speech. You cannot use Amazon Polly to detect and extract text, handwriting, and data from invoice images.
+
+
+
+
+### Amazon Textract
+
+* Amazon Textract is a service that you can use to add document text detection and analysis to applications. You can use Amazon Textract to identify handwritten text, to extract text from documents, and to extract specific information from documents. Amazon Textract does not provide access to FMs.
+* Amazon Textract is fully managed service that can detect and extract text and data from scanned documents, PDFs, and images. One of the use cases for Amazon Textract is to process invoices and receipts. For example, Amazon Textract can detect billing and shipping addresses automatically from images.
 
 ## Storage
 

@@ -271,8 +271,6 @@ All pre-trained models from SageMaker JumpStart support **fine-tuning with custo
 ## Train and refine models
 
 
-
-
 ### Underfitting vs Overfitting
 
 ![](https://docs.aws.amazon.com/images/machine-learning/latest/dg/images/mlconcepts_image5.png)
@@ -385,4 +383,35 @@ Understanding model fit is important for understanding the root cause for poor m
   * maximum depth
   * learning rate
 
+
+## Cost and performance
+
+* SageMaker Cost Savings
+  * Utilize spot instances
+    * Ren unused EC2 capacity from aWS at a discount
+    * Great for workloads that are only periodically and that are tolerant to interruptions
+    * Can be leveraged in SageMaker by simply enabling Managed Spot Training on your training job 
+  * Refine pretrained models with transfer learning
+    * Transfer learning is a for of fine-tuning for pre-trained models
+    * Take generalized, pretrained mdodels and fine-tune them with domain specific data
+    * Retain hyperparameter settings as a starting point when tuning
+  * Utilize SageMaker savings plans
+    * Pay-in-advance in 1or 3 year terms for SageMaker
+    * great for cases where you will have a consistent and predictable timetable
+
+* SageMaker Script Mode
+  * Best way to bring your own t raining or inference scripts to use in the SageMaker ecosystem
+  * Minimizes code changes needed to run custom workloads on SageMaker's prebuilt containers for frameworks like Scikit-learn, PyTorch, TensorFlow, and XGBoost
+  * deploy script mode models for real-time or batch inference
+  * Three Layers of Script Mode
+    1. Define your own training job, model, and inference process
+    2. Modularize your custom workloads and requirements document
+    3. Import custom libraries and dependencies
+
+* SageMaker Automatic Model Tuning (AMT)
+  * Manages running many training jobs to automate hyperparameter tuning
+  * Define your tuning technique and track your objective metric across runs
+  * Warm start tuning jobs allow you to initialize using previous jobs as a starting point
+    * identical data and alorightm
+    * Transfer learning
 
