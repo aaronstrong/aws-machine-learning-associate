@@ -22,6 +22,11 @@
 | [AWS Services](./aws-services/) | NA, list of AWS discussed |
 
 
+## Workshops
+
+* [Amazon SageMaker 101 Workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/0c6b8a23-b837-4e0f-b2e2-4a3ffd7d645b/en-US/getting-started)
+  * [GitHub link to Amazon SageMaker 101 Workshop](https://github.com/aws-samples/sagemaker-101-workshop?tab=readme-ov-file)
+
 ## Helpful Links
 
 * https://github.com/FabG/ml-aws-specialty-lab?tab=readme-ov-file

@@ -104,7 +104,7 @@ Apache Flink is an open-source, distributed engine for stateful processing over 
 
 * **Event-driven applications**, ingesting events from one or more event streams and executing computations, state updates or external actions. Stateful processing allow implementing logic beying the Single Message Transformation, where the resutls depend on the history of the ingested events.
 * **Data Analytics applications**, extracting information and insights from data. 
-* **Data pipeline applications**, transforming and enriching data to be moved from one data storage to another. Traditionally, ETL is executed periodically, in batches. With Apache Flink, the process can operate continuously, moving the data with low latency to their destinations.
+* **Data pipeline applications**, transforming and enriching data to be moved one data storage to another. Traditionally, ETL is executed periodically, in batches. With Apache Flink, the process can operate continuously, moving the data with low latency to their destinations.
 
 * A way to live process and analyse data as it's streamed
 * Interactively query real-time data and generate continuous insights
