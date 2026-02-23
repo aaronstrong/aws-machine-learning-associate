@@ -24,8 +24,11 @@
 
 ## Workshops
 
+* [Learn with AWS](https://builder.aws.com/learn)
 * [Amazon SageMaker 101 Workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/0c6b8a23-b837-4e0f-b2e2-4a3ffd7d645b/en-US/getting-started)
   * [GitHub link to Amazon SageMaker 101 Workshop](https://github.com/aws-samples/sagemaker-101-workshop?tab=readme-ov-file)
+* [Hands on Tutorials](https://aws.amazon.com/getting-started/hands-on/)
+* [End-to-End ML Development with SageMaker Studio and MLflow](https://catalog.workshops.aws/scale-complete-ml-development-with-amazon-sagemaker-studio/en-US/110-module-1/113-open-jupyter-notebook-start-here)
 
 ## Helpful Links
 
