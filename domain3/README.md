@@ -57,3 +57,9 @@ Skills in:
 * Configuring training and inference jobs (for example, by using Amazon EventBridge rules, SageMaker Pipelines, CodePipeline)
 * Creating automated tests in CI/CD pipelines (for example, integration tests, unit tests, end-toend tests)
 * Building and integrating mechanisms to retrain models
+
+---
+
+
+## Model and endpoint requirements for deployment endpoints
+

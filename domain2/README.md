@@ -286,12 +286,48 @@ Understanding model fit is important for understanding the root cause for poor m
     * add layers to neural network
     * consider a more complex model
 * **Overfitting**
-  * Overfitting is when the model performs well on the training data but does not perform well on the evaluation data. This is because the model is memorizing the data it has seen and is unable to generalize to unseen examples.
+  * Overfitting is when the model performs well on the training data but does not perform well on the evaluation data. This is because the <u>model is memorizing the data</u> it has seen and is unable to generalize to unseen examples.
   * Do the following to improve:
     * Feature selection: consider using fewer feature combinations, decrease n-grams size, and decrease the number of numeric attributes bins.
-    * Increase the amount of regularization used
+    * **Increase the amount of regularization used**
     * Ensure that your training data set is diverse and representative
     * Apply dropout to your neural network
+
+#### Remedies for Underfitting and Overfitting
+
+| Underfitting | Overfitting |
+| --- | --- |
+| * **Increase training data quanityt**<br>- Number of data points<br>- Relevent features<br>- Synthentic data<br>**Decrease regularization**<br>- Make weights more 'expressive'<br>**Add max depth, neurons, or layers**<br>**Increase hyperparmeters such as ecphos, batch size, or learning rate may have an effect**<br>**Consider a more complex model**| **Increase training data quality**<br>- Handle outliers in data preprocessing<br>**Increase regularization**<br>- Apply dropout to neural networks<br>- Apply L2 regularization to make model weights less 'expressive'<br>**Reduce max depth, neurons, or layers**<br>**Decrease hyperparameters such as epochs, batch size, or learning state may have an effect**<br> |
+
+### Detecting and Avoiding Catastrophic Forgetting
+
+*This can happen when you're using an Animal Image Recognition model to make predictions on animal images. If your model does great at seeing land animals but not sea creatures, you'll want to supply fine-tuned data of labeled images of sea creatures. In theory the model will see these new creates, but instead catastrophic forgetting happens. Now all land animals are seen as sea creatures.*
+
+* Happens most often when fine-tuning neural networks using traingin data with a novel distribution. Meaning a new data set is introduced that is unlike the original data set to train the model.
+* Neural networks will adjust weights to accomodate new training data, potentially impacting performance on previously learned data
+
+#### Technique for mitigating catastrophic forgetting
+
+* Have a baseline. Have a model versioning to compare performance old and new models.
+* Rehersal - act of periodically coming back to the original data set for training.
+* continual learning frameworks with the use the SageMaker Pipelines
+
+### [Combining multiple training models to improve performance (for example, ensembling, stacking, boosting)](https://aws.amazon.com/blogs/machine-learning/efficiently-train-tune-and-deploy-custom-ensembles-using-amazon-sagemaker/)
+
+![](https://media.geeksforgeeks.org/wp-content/uploads/20251216112827718214/ensemble_learning_.webp)
+
+* In ensembling mode, Autopilot uses stacking to test several combinations of models
+* Jumpstart provide <u>pre-trained models</u> while Autopilot helps select algorithms and train models from scratch
+
+![](https://media.geeksforgeeks.org/wp-content/uploads/20250516170016802150/Boosting.webp)
+* **Boosting** – Training sequentially multiple weak learners, where each incorrect prediction from previous learners in the sequence is given a higher weight and input to the next learner, thereby creating a stronger learner. Examples include AdaBoost, Gradient Boosting, and **XGBoost**. 
+
+![](https://media.geeksforgeeks.org/wp-content/uploads/20250516170016504785/Bagging.webp)
+* **Bagging** – Uses multiple models to reduce the variance of a single model. Examples include Random Forest and Extra Trees. **Random Forest** is a common example of bagging algorithm
+
+![](https://media.geeksforgeeks.org/wp-content/uploads/20250516170017386768/Stacking.webp)
+* **Stacking (blending)** – Often uses heterogenous models, where predictions of each individual estimator are stacked together and used as input to a final estimator that handles the prediction. This final estimator’s training process often uses cross-validation.
+
 
 ### Factors for Model performance and size
    * Algorithmic complexity
@@ -415,3 +451,25 @@ Understanding model fit is important for understanding the root cause for poor m
     * identical data and alorightm
     * Transfer learning
 
+## Task 2.3: Analyze model performance
+
+![](https://www.simplilearn.com/ice9/free_resources_article_thumb/confusion-matrix.JPG)
+
+### Evaluating Classification Models:
+* ![](https://almablog-media.s3.ap-south-1.amazonaws.com/image_14_4f4fc2cf7d.png)
+* ![](https://felixaugenstein.com/blog/wp-content/uploads/2023/03/ml-evaluation-classification-1024x474.png)
+  * **Accuracy**: is the True Predicitions divided by Total Predictions
+    * The accuracy metric minimizes total false predictions without bias toward false positives or false negatives
+  * **Precision**: 
+    * The precision metric minimizes false positives without regard for false negatives. Choose this if false positives are very expensive or risky.
+    * For example, you may want ot use a high precision model for detecting spam emails
+  * **Recall**
+    * The recall metric mimizes false negatives without regard for false positives. Choose this if false negatives are very expensive or risky
+    * For example, if your model is screening high risk patients for a deadly condition, you may be willing ot have some false positives to ensure catching as many of the true positives as possible
+  * Specificity
+    * F1
+      * F1 score balances precision and recall. Distinct from accuracy because it still gives valuable results when actual positives are a significant minority
+
+### [Evaluating Binary Classification Models: Receiver Operating Characteristic (ROC) curve](https://docs.aws.amazon.com/machine-learning/latest/dg/binary-model-insights.html)
+
+![](https://docs.aws.amazon.com/images/machine-learning/latest/dg/images/image48b.png)
