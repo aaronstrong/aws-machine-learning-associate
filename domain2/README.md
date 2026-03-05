@@ -453,7 +453,9 @@ Understanding model fit is important for understanding the root cause for poor m
 
 ## Task 2.3: Analyze model performance
 
-![](https://www.simplilearn.com/ice9/free_resources_article_thumb/confusion-matrix.JPG)
+<!-- ![](https://www.simplilearn.com/ice9/free_resources_article_thumb/confusion-matrix.JPG) -->
+
+![](https://miro.medium.com/v2/resize:fit:1100/format:webp/1*XBhArAEOw17ipDex7s5Nqg.jpeg)
 
 ### Evaluating Classification Models:
 * ![](https://almablog-media.s3.ap-south-1.amazonaws.com/image_14_4f4fc2cf7d.png)
@@ -473,3 +475,55 @@ Understanding model fit is important for understanding the root cause for poor m
 ### [Evaluating Binary Classification Models: Receiver Operating Characteristic (ROC) curve](https://docs.aws.amazon.com/machine-learning/latest/dg/binary-model-insights.html)
 
 ![](https://docs.aws.amazon.com/images/machine-learning/latest/dg/images/image48b.png)
+
+
+### Evaluating Regression Model Performance
+
+* **R-Squared**
+  * A value from 0 to 1 that describes how well your model explains the variance in the data
+  * Generally you want an R-Squared value greater than 0.8, but an R-Squared close to 1 indicates overfitting
+* **Root Mean Squared Error (RMSE)**
+  * A metric that describes the average magnitude of errors made by the regression model
+  * RMSE measures the average distance between predicted and actual values
+  * An RMSE close to 0 indicates a very accurate model, but too close 0 could indicate overfitting
+
+## Methods to create performance baselines
+
+Use SageMaker Model Monitor to monitor these 4 areas:
+
+1. Monitor data quality :mag_right:
+2. Monitor model performance :dart:
+3. Monitor Model bias drift :balance_scale:
+4. Monitor feature attribution drift :wrench:
+   * Attribute drift can involve a single feature or small group of features dominating predictions.
+   * Requires a special baseline call **SHAP baseline** (SHaply Additive exPlanations), which mathematically determines feature attribution.
+   * Product violations when feature attribution diverges significantly from your SHAP baseline
+
+* Create a baseline to understand current characteristics
+* Schedule monitoring jobs on real-time or batch endpoints
+* Deliver metrics to CloudWatch where you can set thresholds
+
+## Comparing the performance of a shadow variant to the performance of a production variant
+
+### [Test models by specifying traffic distribution](https://docs.aws.amazon.com/sagemaker/latest/dg/model-ab-testing.html#model-testing-traffic-distribution)
+
+![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/model-traffic-distribution.png)
+
+* Test multiple models by distributing traffic between them, specify the percentage of the traffic that gets routed to each model.
+
+### [Test models by invoking specific variants](https://docs.aws.amazon.com/sagemaker/latest/dg/model-ab-testing.html#model-testing-target-variant)
+
+![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/model-target-variant.png)
+
+* Specify the specific version of the model that you want to invoke by providing the value for the `TargetVariant` parameter when you call `invokeEndpoint`
+
+### [Test models using A/B testing]
+
+* Use traffic distribution and invoke specific variants to compare performance metrics between multiple models or model versions
+
+### [Shadow Testing](https://aws.amazon.com/blogs/aws/new-for-amazon-sagemaker-perform-shadow-tests-to-compare-inference-performance-between-ml-model-variants/)
+
+![](https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2022/11/16/sm-shadow-testing-hiw.png)
+
+* In Shadow Mode, requests are sent to the production variant. The prod variant responds to the user, BUT
+* The variant routes a copy of th inference request to a shadow variant, which then responces are stored in S3 bucket
