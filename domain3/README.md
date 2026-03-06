@@ -207,3 +207,133 @@ CPU or GPU?
   * Auto Scaling
   * Serial inference pipelines
   * A/B testing
+
+### Selecting the correct deployment target 
+
+* SageMaker Endpoint
+  * Running EC2 instances with Docker runtime
+  * Under the covers, using ECS
+  * Comes with pre-build Docker images with XGBoost, MXNet, TensorFlow
+* Elastic Container Service (ECS)
+* Elastic Kubernetes Service (EKS)
+  * A managed service that makes it easy for you to run Kubernetes on AWS without needing to install and operate your own Kubernetes control plane or worker nodes
+* Build and manage your own K8 cluster
+* Lambda
+
+### Difference between on-demand and provisioned resources
+
+| On-Demand | Provisioned |
+| --- | --- |
+| Less predictable traffic | Consistent and predictable |
+| Flexible | A commitment is involved |
+| No minimum fees | Purhcase reserved capacity|
+| No upfront commitment | you pay even if you don't fully use it |
+| Pay only for what you use | Increased Performance or throughput |
+
+### Comparing Scaling Policies
+
+
+
+### SageMaker Endpoint Auto Scaling Policies
+
+## Target Tracking Scaling (RECOMMENDED)
+**What it is**: Automatically adjusts instance count to keep a CloudWatch metric at your target value
+**Required Parameters**:
+- **Metric**: CloudWatch metric to track (e.g., InvocationsPerInstance)
+- **Target Value**: Desired metric value (e.g., 70 invocations/instance/min)
+**How it works**: AWS auto-creates alarms and adjusts instances to maintain target
+---
+## Scaling Limits (MUST SET FIRST)
+- **Minimum**: ≥ 1 instance (scales down to this if traffic = 0)
+- **Maximum**: ≥ Minimum (no hard cap)
+**Config options**: Console, AWS CLI (`--min-capacity`, `--max-capacity`), or API
+---
+## Cooldown Period (Prevents Over-Scaling)
+- **Default**: 300 seconds (5 min)
+- **Scale-in cooldown**: Blocks instance deletion temporarily
+- **Scale-out cooldown**: Limits new instance creation temporarily
+**Adjust if**:
+- ⬆️ Increase: Instances adding/removing too fast
+- ⬇️ Decrease: Instances not adding fast enough for traffic spikes
+---
+## Schedule-Based Scaling (Optional)
+Time-based scaling at specific times (one-time or recurring)
+- **Config method**: CLI or API only (not console)
+---
+## Quick Exam Facts
+✅ Target tracking = metric + target value (simplest approach)
+✅ Minimum ≤ Maximum (always)
+✅ Minimum ≥ 1 (hard requirement)
+✅ Zero traffic auto-scales to minimum only
+✅ Cooldown = stability mechanism to prevent rapid scaling
+✅ Step scaling = for advanced/complex rules (scale from zero)
+
+
+### Using Spot Instances
+### What It Does
+- Uses EC2 Spot instances instead of on-demand to run SageMaker training jobs
+- Reduces training costs (up to 90% cheaper)
+- AWS manages Spot interruptions automatically
+## Key Configuration
+- `EnableManagedSpotTraining` = **True**
+- `MaxWaitTimeInSeconds` – set larger than `MaxRuntimeInSeconds`
+## Important Behavior
+- Spot instances can be interrupted, causing longer job times
+- **Use checkpointing** to save training progress to S3
+- When job restarts, SageMaker loads checkpoint data instead of starting over
+## Works With
+- Automatic model tuning (hyperparameter tuning)
+- Any training job where cost savings matter
+## Built-in Algorithm Limit
+- Max wait time capped at 3600 seconds (60 minutes)
+
+### Checkpoints in Amazon SageMaker AI - Key Usage Points
+### What Checkpoints Do
+- Save the state of machine learning models during training
+- Snapshots of the model configured by the callback functions of ML frameworks
+- Can be used to restart a training job from the last saved checkpoint
+## What You Can Do With Checkpoints
+- Save model snapshots under training due to unexpected interruption to the training job or instance
+- Resume training the model in the future from a checkpoint
+- Analyze the model at intermediate stages of training
+- Use checkpoints with S3 Express One Zone for increased access speeds
+- Use checkpoints with SageMaker AI managed spot training to save on training costs
+## How Storage Works
+- Training containers on Amazon EC2 instances save checkpoint files under a local directory (default: `/opt/ml/checkpoints`)
+- SageMaker provides functionality to copy checkpoints from local path to Amazon S3
+- Existing checkpoints in S3 are written to the SageMaker container at the start of the job
+- New checkpoints written during training are synced to S3 during training
+- If a checkpoint is deleted in the SageMaker container, it's also deleted in the S3 folder
+
+### Configure Sagemaker Endpoints within a VPC Network
+
+*Remember that every AWS service is going to leverage the public endpoint by default*
+
+#### AWS PrivateLink
+
+![](https://docs.aws.amazon.com/images/vpc/latest/privatelink/images/use-cases.png)
+
+* privately connect your VPC to services and resources as if they were in your VPC.
+* Public internet access is not required, NAT gateway or internet gateways not needed.
+* Create endpoints within your VPC to control and secure traffic
+* AWS PrivateLink is what power VPC interface endpoints, which can be used to securely access SageMaker
+
+<u>Interface Endpoints</u>
+
+* Deploys an Elastic Network Interface (ENI) into chosen VPC subnets
+  * *ENI is essentially a virtual network interface for a VPC
+* The ENI is deployed to a private subnet
+* Requires management of an attache security group
+
+### Predefined CloudWatch metrics for SageMaker Autoscaling
+
+You can monitor Amazon SageMaker AI using Amazon CloudWatch, which collects raw data and processes it into readable, near real-time metrics.
+
+Here are some common metrics, every 1 minute:
+
+* `ModelLatency` - The time it takes the model container to process the request and return a response. Measured in microseconds.
+* `InovationsPerInstance` - Average number of invocations per instance. Per minute for hte model variant. Variant is the deployed version of your model.
+* `CPUUtilization` - Is considered a custom metric. Can scale instances based on the average cpu utilization across all instances.
+* **High-resolution** metrics - metrics emitted 10 seconds meaning scaling out is triggered much faster (default is 1 minute).
+  * `ConcurrentRequestsperModel`
+  * `ConcurrentRequestsPerCopy`
