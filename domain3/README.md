@@ -337,3 +337,159 @@ Here are some common metrics, every 1 minute:
 * **High-resolution** metrics - metrics emitted 10 seconds meaning scaling out is triggered much faster (default is 1 minute).
   * `ConcurrentRequestsperModel`
   * `ConcurrentRequestsPerCopy`
+
+## MLOps
+
+![](https://docs.aws.amazon.com/images/whitepapers/latest/ml-best-practices-public-sector-organizations/images/aws-mlops-framework.png)
+
+### AWS CodePipeline
+
+* CodePipeline is a fully managed, CI/CD service that automates building, testing, and deploying applications and models.
+* Integrates with IAM to control access
+* supports many AWS services (CodeCommit, S3, ECR) and third party tools like GitHub.
+* Each AWS account has a limit of 1000 for the number of pipelines that can be created in a single region
+* Max size of input artifacts when stored in GitHub is 1GB
+
+### AWS CodeBuild
+
+* A fully managed, serverless continuous integration service that compiles source code, runs tests,a nd produces deployable software packages.
+  * Can build a Docker Image from the `Dockerfile` and `buildspec.yaml`
+* No infrastructure to manage, nothing to patch or manage
+* Charged based on the number of minutes to take to run
+* Works well with CodePipeline, Github, BitBucket and S3
+* Uses IAM roles to control access
+
+### AWS CodeDeploy
+
+* A deployment service that automates application deployments to EC2 instances, on-prem instances, servleress Lambda functions, or Amazon ECS services.
+* Can deploy application content that runs on a server and is stored in Amazon S3 buckets, GitHub repos, or BitBucket repos. 
+* Scales with your infrastructure so you can easily deploy to one instance or thousands.
+
+### AWS CloudFormation
+
+* an Infrastructure as Code service that allows you to model, provision, and manage AWS and third-party resources using JSON or YAML templates.
+* Eliminates manual, error-prone configuration
+* Infrastructure code is checked into version control systems.
+
+### Amazon EventBridge
+
+* Uses event from CloudWatch, can also schedule tasks
+  * Events are state changes
+* Continuously track and monitor status changes in SageMaker
+* SageMaker model, training job or endpoint state changes
+* Data Ingestion events
+* Define automated actions that should be invoked when certain events occur
+* Initiate Step Functions state machines (workflow) to trigger model trainingw hen new data is ingested.
+
+### Sagemaker Pipelines
+
+![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/pipeline-full.png)
+
+* Purpose built workflow orchestration for machine learning pipelines, integrated with all SageMaker features
+* Automate everyone: Data Processing :arrow_right: model training :arrow_right: fine tuning evaluation :arrow_right: deployment :arrow_right: monitoring jobs
+* Uses a drag and drop UI to create a series of steps in a directed acyclic graph (DAG). The above is an example of a pipeline DAG:
+  * **Data Process**: `AbaloneProcess` runs a preprocessing script on the data used for training.
+  * **Training step**: `AbaloneTrain` configures hyperparameters and trains a model from the preprocessed input data.
+  * **Processing Step**: `AbaloneEval` evaluates the mode for accuracy.
+  * **Condition Step**: `AbaloneMSECond` checks to make sure the mean-square-error results of model evaluation is below a certain limit.
+  * **Registered Model**: `AbaloneRegisterModel` step to register the model as a versioned model package group into Amazon SageMaker Model Registry
+  * **Create Model**: `AbaloneCreateModel` step to create the model in preparation for batch transformation. In `AbaloneTransform`, SageMaker AI calls a Transform step to generate model predictions on a dataset you specify.
+
+## Automation and integration of data ingestion with orchestration services
+
+Data can be ingested into the machine learning pipeline using an orchestration service. There are two primary services
+1. Step Functions
+2. AWS CodePipelines
+
+### Step Functions
+
+* Serverless orchestration and workflow service
+* Automatically trigger and track each step with logging enabled
+* The output of one step is often the input to the next
+
+
+### AWS CodePipeline
+
+* Automate the continuous delivery of machine learning models
+
+## Deployment strategies and rollback actions 
+
+### [Blue/Green Deployment Methodology](https://docs.aws.amazon.com/whitepapers/latest/blue-green-deployments/introduction.html)
+
+![](https://docs.aws.amazon.com/images/whitepapers/latest/blue-green-deployments/images/blue-green-example.png)
+
+* The fundamental idea behind blue/green deployment is to shift traffic between two identical environments that are running different versions of your application.
+* The blue environment represents the current application version serving production traffic.
+* In parallel, the green environment is staged running a different version of your application.
+* After the green environment is ready and tested, production traffic is redirected from blue to green.
+*  If any problems are identified, you can roll back by reverting traffic back to the blue environment.
+*  
+
+### Canary Deployment
+
+* Is a type of Blue/Green deployment strategy that is more risk-averse.
+* Involves a phased approach in which traffic is shifted to a new version of the application in two increments.
+  * The first increment is a small percentage of the traffic, which is referred to as the canary group. Used to test the new version.
+  * If successful, the traffic is shifted to the new version in the second increment.
+  * In SageMaker AI, you can specify initial traffic distribution by using the `InitialVariantWeight` API.
+
+### Shadow
+
+* In this mode, the new model works alongside an older model or business process, and performs inferences without influencing any decisions.
+* This mode is useful as a final check or higher fidelity experiment beforre you promote the model to production.
+* Useful if you don't need any user inference feedback
+
+### A/B testing
+
+* This mode is used when the ML practitioners develop new features, but are unsure if the new model will improve business outcomes, like revenue and clickthrough rates.
+* Consider an e-commerce site with a business goal to sell as many products as possible. A team member might propose a new review ranking algorithm to improve sales. Using A/B testing, they could roll the old and new algorithms out to different but similar user groups, and monitor the results to see whether users who received predictions form the new model are more likely to make purchases.
+* A/B testing also helps gauge the business impact of model staleness and drift. Teams can put new models in production with some recurrence, perform A/B testing with each model, and create an age versus performance chart. This would help the team understand the data drift volatility in their production data.
+
+## Creating automated tests in CI/CD pipelines
+
+Types of Automated tests
+
+* **Unit Tests**:  These tests validate individual units of code in isolation, simulating external dependencies using mocks or emulators. They are low-level, close to the source code, and run quickly within the development environment.
+* **Integration Tests**: Focusing on business requirements, these tests check that the system's output meets the specified criteria without necessarily verifying the internal system state.
+* **Regression Tests**: Rerun tests to make sure existing features and functions still work and function after a new change has been released.
+
+## Best practices for Retraining a Model- Why Model Retraining is Necessary
+### Key Reasons
+- **Model Drift**: Real-world data evolves over time, causing deployed models to lose accuracy
+- **Concept Drift**: Patterns in data change, degrading model performance
+- **Data Decay**: As data ages, model predictions become less reliable
+- **Continuous Improvement**: Adaptation to changing data patterns and new business requirements
+### Risk of NOT Retraining
+Treating model deployment as the final step without ongoing evaluation creates **HIGH RISK** for:
+- Significant performance degradation before detection
+- Loss of competitive advantage
+- Decreased user trust in predictions
+- Missed business opportunities
+---
+## Tools & Services for Model Retraining
+### Monitoring & Detection
+- **Amazon SageMaker AI Model Monitor** - Continuously monitor model quality, detect data drift, concept drift, bias drift, and feature attribution drift
+- **Amazon CloudWatch** - Monitor metrics, create custom dashboards, set alarms for performance thresholds
+### Automation & Orchestration
+- **AWS Step Functions** - Create automated retraining workflows
+- **SageMaker AI Pipelines** - Define and run ML training pipelines
+- **Amazon EventBridge** - Trigger retraining pipelines automatically when drift is detected
+### Dashboard & Tracking
+- **SageMaker AI Model Dashboard** - Centralized interface for tracking deployed models, endpoints, and performance trends
+### Human-in-the-Loop
+- **Amazon Augmented AI (A2I)** - Route low-confidence predictions to human reviewers for validation and ground truth collection
+### Documentation & Knowledge Sharing
+- **Amazon QuickSight with GenBI** - Generate visualizations and dashboards automatically
+- **Amazon S3** - Store experiment results and operational reports
+---
+## Implementation Workflow
+1. **Monitor** → Establish comprehensive model monitoring with SageMaker Model Monitor
+2. **Alert** → Configure CloudWatch alarms to notify teams of performance issues
+3. **Track** → Use SageMaker Model Dashboard for visibility across models
+4. **Automate** → Create retraining pipelines triggered by drift detection
+5. **Validate** → Incorporate human review with A2I for sensitive predictions
+6. **Document** → Store learnings and insights for future iterations
+7. **Review** → Hold regular stakeholder sessions to discuss improvements
+---
+## Key Takeaway
+Effective model retraining requires **continuous monitoring**, **automated pipelines**, **human validation**, and **documented learnings** to maintain model quality and adapt to changing data patterns over time.
