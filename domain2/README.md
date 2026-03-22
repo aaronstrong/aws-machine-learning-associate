@@ -445,11 +445,59 @@ Understanding model fit is important for understanding the root cause for poor m
     3. Import custom libraries and dependencies
 
 * SageMaker Automatic Model Tuning (AMT)
+  * Amazon SageMaker AI automatic model tuning (AMT) finds the best version of a model by running many training jobs on your dataset. AMT is also known as hyperparameter tuning. To do this AMT uses the algorithm and ranges of hyperparameters that you specify. It then chooses the hyperparameter values that creates a model that performs the best, as measured by a metric that you choose.
   * Manages running many training jobs to automate hyperparameter tuning
   * Define your tuning technique and track your objective metric across runs
   * Warm start tuning jobs allow you to initialize using previous jobs as a starting point
-    * identical data and alorightm
+    * The results of previous tuning jobs are used to informw hich combinations of hyperparameters to search over in the new tuning job.
+    * Identical data and alorightm
     * Transfer learning
+    * Types of Warm Start Tuning Jobs
+      * *IDENTICAL_DATA_AND_ALGORITH* - The new hyperparmeter tuning job uses the same input data and training images as teh parent tuning jobs. You can change the hyperparameter ranges to search and the maximum number of training jobs that the hyperparmeters tung job launches.
+      * *TRANSFER_LEARNING* - The new hyperparemter tuning job can include input data, hyperparameter ranges, maximum number of concurrent training jobs, and maximum number of training jobs that are different than those of its parent hyperparameter tuning jobs.
+     
+#### 🔑 Quick Comparison Table
+
+| Feature | IDENTICAL_DATA_AND_ALGORITHM | TRANSFER_LEARNING |
+|---|---|---|
+| Same input data required? | ✅ Yes | ❌ No (can use new/different data) |
+| Same training image/algorithm required? | ✅ Yes (minor changes OK) | ❌ No (can use a different version) |
+| Can change hyperparameter ranges? | ✅ Yes | ✅ Yes |
+| Can change tunable ↔ static hyperparams? | ✅ Yes | ✅ Yes |
+| Total static + tunable count must stay same? | ✅ Yes | ✅ Yes |
+| Extra response field? | ✅ Yes — `OverallBestTrainingJob` | ❌ No |
+| Use case | Expanding search / more training jobs | New data, updated algorithm, or experiments |
+
+#### 📌 IDENTICAL_DATA_AND_ALGORITHM — Cliff Notes
+
+- **Same data, same algorithm** — the new job uses the exact same input data and training image as the parent job(s).
+- **Why use it?** You want to:
+  - Increase the total number of training jobs (expand the search space)
+  - Change hyperparameter ranges or values
+  - Flip hyperparameters from tunable → static or static → tunable
+- **Algorithm changes:** Minor changes are OK (e.g., logging improvements, different data format support), but you **cannot swap in a completely new version** of the algorithm.
+- **Static + tunable count rule:** The total number of static + tunable hyperparameters must stay the same across all parent jobs.
+- **Bonus field:** The `DescribeHyperParameterTuningJob` response includes `OverallBestTrainingJob` — a `TrainingJobSummary` of the single best job across this tuning job AND all its parent jobs.
+
+---
+
+#### 📌 TRANSFER_LEARNING — Cliff Notes
+
+- **More flexible** — the new job can have different input data, different hyperparameter ranges, different max concurrent jobs, and different max training jobs vs. the parent job(s).
+- **Algorithm flexibility:** The training image/algorithm **can be a different version** from the parent job. (But beware: big changes to the dataset or algorithm can reduce the usefulness of warm start.)
+- **Why use it?** You want to:
+  - Tune with new or updated data
+  - Use a newer version of the training algorithm
+  - Experiment with broader changes while still benefiting from prior results
+- **Static + tunable count rule:** Same rule applies — total static + tunable hyperparameter count must remain the same across parent jobs.
+- **Risk:** If dataset or algorithm changes **significantly affect the objective metric**, warm start tuning may be less effective or even counterproductive.
+
+#### 🧠 Memory Trick
+
+| Type | Think of it as... |
+|---|---|
+| `IDENTICAL_DATA_AND_ALGORITHM` | "Same recipe, just cook more batches" |
+| `TRANSFER_LEARNING` | "New ingredients or a new chef, but learned from last time" |
 
 ## Task 2.3: Analyze model performance
 
