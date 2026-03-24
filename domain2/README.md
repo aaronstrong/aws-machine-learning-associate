@@ -143,9 +143,16 @@ The training stage of the full machine learning (ML) lifecycle spans from access
 ![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/sagemaker-training.png)
 
 If using SageMaker AI for the first time and want to find a quick ML solution to train a model on your dataset, considering using a no-code or low-code solution such as
-* SageMaker Canvas
-* SageMaker JumpStart
-* SageMaker AutoPilot
+* **SageMaker Canvas** - is a no-code visual interface that enables business analysts and non-technical users to build, train, and deploy machine learing models without writing code.
+  * Key Use case: Business predictions (eg: forecasting sales, predicting churn, inventory management)
+  * Data Types: Supports tabular, image and text data.
+* **SageMaker AutoPiplot** - is an automated machine learning (AutoML) tool that automatically builds, trains,a nd tunes top-performing models based on your tabular data, while offering full transparancy.
+  * Key Use Case: Automating the entire machine learning pipeline - preprocessing, training, and tuning - to find the best model.
+  * Best For: Users hwo have data science knowledge but want to automate the manual, repetitive steps of ML.
+* **SageMaker JumpStart** - Is a machine learning hub that provides pre-trained models, curated soluations, and sample notebooks, allowing users to deploy and fine-tune models with a few clicks.
+  * Key Use Case - Rapidly deploing open-source or pre-trained models (like LLMs, Image classification) and fine-tuning them on specific data.
+  * Best For: Accessing foundation models and quickly accelerating the development lifecycle.
+  * Key Feature: Built-in "model zoo" from sources like TensorFlow, PyTorch, and Hugging Face.
 
 #### Full view of the SageMaker training workflow and features
 
