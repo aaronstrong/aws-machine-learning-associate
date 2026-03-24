@@ -226,9 +226,10 @@ You can use SageMaker Clarify to analyze your datasets and models for explainabi
 
 #### Pre-trained Models: Deep learning and CNNs
 
-* Object Detection
-* Image Classification
-* Semantic Segmentation
+* Object Detection - detects bounding boxes and object labels in an image. It is supervised learning algorithm that supports transfer learning with available pretrained TensorFlow models.
+* Image Classification MXNEet - Uses example data with answers (referred to as a *supervised algorithm*). Use this algorithm to classify images.
+* Image Classification TensorFlow - uses pretrained TensorFlow Hub models to fine-tune for specific tasks (referred to as a *supvervised algorithm*). use this algorithm to classify images.
+* Semantic Segmentation - provides a fine-grained, pixel-level approach to developing computer vision applications.
 * Text Classification
 
 These pre-trained models leverage open-source frameworks: TensorFlow, PyTorch and MXNet
