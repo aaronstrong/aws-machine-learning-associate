@@ -135,6 +135,27 @@ Enforcing models to make decisions. The algorithm of this method helps the model
 
 ### [Amazon SageMaker AI built-in algorithms and when to apply them](https://docs.aws.amazon.com/sagemaker/latest/dg/algos.html)
 
+
+#### The basic architecture of SageMaker Training
+
+The training stage of the full machine learning (ML) lifecycle spans from accessing your training dataset to generating a final model and selecting the best performing model for deployment.
+
+![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/sagemaker-training.png)
+
+If using SageMaker AI for the first time and want to find a quick ML solution to train a model on your dataset, considering using a no-code or low-code solution such as
+* SageMaker Canvas
+* SageMaker JumpStart
+* SageMaker AutoPilot
+
+#### Full view of the SageMaker training workflow and features
+
+The following chart shows a high level overview of your actions (in blue boxes) and available SageMaker Training features (in light blue boxes) throughout the training phase of the ML lifecycle.
+
+![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/training-main.png)
+
+
+
+
 | Learning paradigm or domain | Problem Types | Examples & Use cases | Data input format | Built-in Algorithms |
 | --- | --- | --- | --- | --- |
 | Pre-trained models and pre-built solution templates | Image Classification<br>Tabular Classification<br>Text Classification<br>Image Embedding | Here | - | - |
