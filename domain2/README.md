@@ -133,10 +133,10 @@ The model creates its own labels based on the data throught tasks like predictin
 
 Enforcing models to make decisions. The algorithm of this method helps the model learn based on feedback. Use cases are self-driving cars.
 
-### [Amazon SageMaker AI built-in algorithms and when to apply them](https://docs.aws.amazon.com/sagemaker/latest/dg/algos.html)
 
 
-#### The basic architecture of SageMaker Training
+
+### The basic architecture of SageMaker Training
 
 The training stage of the full machine learning (ML) lifecycle spans from accessing your training dataset to generating a final model and selecting the best performing model for deployment.
 
@@ -196,6 +196,8 @@ After training, you obtain a final model artifact to use for model deployment an
 * You can also use the Incremental Training funcationality of SageMaker to load and update your model (or fine-tune) with an expanded dataset.
 * You can register model training as a step in your SageMaker Pipeline or as part of the Workflow features offered by SageMaker in order to orchestrate the full ML lifecycle.
 
+
+### [Amazon SageMaker AI built-in algorithms and when to apply them](https://docs.aws.amazon.com/sagemaker/latest/dg/algos.html)
 
 | Learning paradigm or domain | Problem Types | Examples & Use cases | Data input format | Built-in Algorithms |
 | --- | --- | --- | --- | --- |
