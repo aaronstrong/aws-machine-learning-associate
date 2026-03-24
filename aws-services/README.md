@@ -94,6 +94,16 @@ For Amazon Redshift destinations, streaming data is delivered to your S3 bucket 
 * Integrate with Lambda for custom transformations
 * Dynamically partition data delivered to S3
 
+#### Amazon Kinses Data Streams vs Data Firehose
+
+| - | Data Streams | Data Firehouse |
+| --- | --- | --- |
+| Short definition | Scalable and durable real-time data streaming service | Capture, transform, and deliver streaming data into data lakes, data stores, and anlaytics services |
+| Data Sources | Any data source 9servicer, mobile devices, IoT devices, etc) that can call the Kinesis API to send dat. | Any data source (servers, mobile deivces, iOT devices, etc). that can all the API to send data. |
+| Data consumers | Kineses data analytics, Amazon EMR, Amazon EC2, AWS Lambda | Amazon S3, Amazon Redshift, Amazon ElasticSearch, DataDog, New Relic |
+| Uses Cases | - Log and event data collection<br>- Real-time analytics<br>- Mobile data capture<br>- Gaming data feed | - IoT Analytics<br>- clickstream analytics<br>- Log Analytics<br>- Security Monitoring |
+| Way to remember | Real-time<br>real time data ingestion and processing<br>Control and manage the flow odata yourself | Near Real time<br>near real time and sinking data to RedShift, S3, Splunk<br>Want data to be automatically processed and delivered to a specific destination |
+
 #### Managed Service for Apache Flink
 
 ![](https://d1.awsstatic.com/Picture1.f8c5ecd75aae8cd14f6041541b55d5c5985487a6.f8c5ecd75aae8cd14f6041541b55d5c5985487a6.jpg)
