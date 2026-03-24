@@ -153,7 +153,48 @@ The following chart shows a high level overview of your actions (in blue boxes) 
 
 ![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/training-main.png)
 
+#### Before Training
 
+There are a number of scenarios of setting up data resources and access you need to consider before training. Refer to the following diagram and details of each before-training stage to get a sense of what decisions you need to make.
+
+![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/training-before.png)
+
+* **Prepare data**: Before training, you must have finished data cleaning and feature engineering during the data preparation stage. SageMaker AI has several labeling and feature engineering tools to help you. See Label Data, Prepare and Analyze Datasets, Process Data, and Create, Store, and Share Features for more information.
+* **Choose an Algorithm or framework**: There are different options for algorithms and frameworks.
+  * If you prefer low-code implementations of a pre-built algorithm, use one of the built-in algorithms offered by SageMaker
+  * If you need more flexibility to customize your model, run your training script using your preferred frameworks and toolkiets within SageMaker AI, use ML Frameworks and Toolkits.
+  * To extend pre-built SageMaker AI Docker images as the base image of your own container, see Use pre-built SageMaker AI Docker Images.
+  * To bring yoru custom Docker container to SageMaker, see Adapting your own Docker container to work with SageMaker AI. You need to install the sagemaker-training-toolkit to your container.
+* **Manage data storage**: Understanding mapping between the data storage ( S3, EFS, FSx) and the training container that runs in the Ec2 compute instance. SageMaker helps map the storage paths and the local paths in the training container. After mapping is done, consider using one of the data transmission modes: File, Pipe and FastFile mode.
+* **Set up access to training data**: Use SageMaker Ai domain, a domain user profile, IAM, Amazon VPC, and AWS KMS to meet the requirements of the most security-sensitive orgs.
+* **Stream your input data**: SageMaker provides three data input modes: *File*, *Pipe*, *FastFile*. The default input mode is File mode, which loads the entire dataset during initializing the training job.
+* **Analyze your data for bias**: Before training, you can analyze your dataset and model for bias against a disfavored group so that you can check that your model learns an unbiased dataset using SageMaker Clarify.
+* **Choose which SageMaker SDK to use**: There are two ways to launch a training job in SageMaker AI: using the high-level SageMaker AI PYthon SDK, or using the low-level SageMaker APIs for the SDK for Python (Boto3) or the AWS CLI.
+
+
+#### During Training
+
+During training, you need to continuously improve training stability, training speed, training efficiency while scaling compute resources, cost optimization, and, most importantly, model performance. 
+
+![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/training-during.png)
+
+* **Set up infrastructure**
+* **Run a training job from a local code**
+* **Tracking Training jobs**
+* **Distributed training**
+* **Model hyperparameter tuning**
+* **Checkpointing and cost savings with Spot instances**
+
+#### After Training
+
+After training, you obtain a final model artifact to use for model deployment and inference. There are additional actions involved in the after-training phase as shown in the following diagram.
+
+![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/training-after.png)
+
+* **Obtain baseline model**
+* **Examine model performance and check for bias**
+* You can also use the Incremental Training funcationality of SageMaker to load and update your model (or fine-tune) with an expanded dataset.
+* You can register model training as a step in your SageMaker Pipeline or as part of the Workflow features offered by SageMaker in order to orchestrate the full ML lifecycle.
 
 
 | Learning paradigm or domain | Problem Types | Examples & Use cases | Data input format | Built-in Algorithms |
