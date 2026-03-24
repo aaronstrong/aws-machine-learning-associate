@@ -511,11 +511,13 @@ Understanding model fit is important for understanding the root cause for poor m
 * ![](https://felixaugenstein.com/blog/wp-content/uploads/2023/03/ml-evaluation-classification-1024x474.png)
   * **Accuracy**: is the True Predicitions divided by Total Predictions
     * The accuracy metric minimizes total false predictions without bias toward false positives or false negatives
-  * **Precision**: 
+  * **Precision**:
+    * Precision measures the proportion of correct positive predictions over all positive predictions. 
     * The precision metric minimizes false positives without regard for false negatives. Choose this if false positives are very expensive or risky.
     * For example, you may want ot use a high precision model for detecting spam emails
   * **Recall**
     * The recall metric mimizes false negatives without regard for false positives. Choose this if false negatives are very expensive or risky
+    * Recall measures the proportion of correct positive predictions over all actual positive values. All actual positive values include boht reviews that correctly predicted as positive (true positive) and reviews that are incorrectly predicted as negative but are actually positive (false negative). To maximize recall means to minimize the false negatives.
     * For example, if your model is screening high risk patients for a deadly condition, you may be willing ot have some false positives to ensure catching as many of the true positives as possible
   * Specificity
     * F1
