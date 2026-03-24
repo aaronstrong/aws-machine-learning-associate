@@ -283,6 +283,10 @@ There are two ways to ingest data:
 
 ## 1.2 Data Transformation & Feature Engineering
 
+## Transform Data: Encode
+
+* **One-hot Encoding** - One-hot encoding is a technique to transform categorical variables into a numerical format by creating binary columns for each category. One-hot encoding creates additional columns for each unique feature value, and assigns 1 or 0 based on the original categorical feature value for each row. One-hot encoding is an appropriate method for unranked categorical features with low cardinality.
+
 ### Cleaning Dirty Data
 
 **What Causes Dirty data**
