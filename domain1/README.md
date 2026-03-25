@@ -503,3 +503,27 @@ Here we want to encrypt data in transit and at rest. Below are some of the commo
 * **FastFile Mode**: An enhanced version of File Mode that leverages a high-throughput file system for faster data loading.
 * **FSx for Lustra**: This option allows you to use a high-performance, POSIX-compliant file system for training data, which is ideal for workload that need very fast access to data.
 * **Amazon Elastic File System (EFS)**: This provides a simple, serverless, set-and-forget elastic file system that can be accessed by multiple training instances, useful for shared datasets.
+
+
+### [Recommendations for choosing the right data preparation tool in SageMaker AI](https://docs.aws.amazon.com/sagemaker/latest/dg/data-prep.html)
+
+Data preparation in machine learning refers to the process of collecting, preprocessing, and organizing raw data to make it suitable for analysis and modeling. This step ensures that the data is in a format from which machine learning algorithms can effectively learn. Data preparation tasks may include handling missing values, removing outliers, scaling features, encoding categorical variables, assessing potential biases and taking steps to mitigate them, splitting data into training and testing sets, labeling, and other necessary transformations to optimize the quality and usability of the data for subsequent machine learning tasks.
+
+#### Choose a feature
+
+There are 3 primary uses for *data preparation* with SageMaker AI.
+
+<u>Use Cases</u>
+
+* **Use Case 1**: For those who prefer a visual interface. SageMaker provides an easy way to explore, prepare, and engineer features for model traning through apoint-and-click environment.
+* **Use Case 2**: For users comfortable with codeing who want more flexibility and control over data preparation. SageMaker integrates tools into its coding environment for exploration, transofmrations, and faeture engineering.
+* **Use Case 3**: For users focused on scalable data preparation, SageMaker AI offers severless capabilities that leverage Hadoop/Spark ecosystem for distributed processing big data.
+
+#### Recommended Features
+
+| Description | Use Case 1 | Use Case 2 | Use Case 3 |
+| --- | --- | --- | --- |
+| SageMaker AI feature | Data Wranger within SageMaker Canvas | Data preparation with SQL in Studio | Prepare data using EMR serverless applications in Studio |
+| Description | SageMaker Canvas is a visual low-code environment for building and training machine learning models. Integrates with Data Wrangler to allow users to combine, transform, and clean datasets through point-and-click | The SQL extension in Studio allows users to connect to RedShift, SnowFlake, Athena, and S3 to author ad-hoc SQL queries, and preview results in JupterLab notebooks. | Integration between EMR serverless and Amazon SageMaker Studio provides a scalable serverless environment for large-scal data preparation for machine learing using open-source frameworks like Apache Spark and Hive. |
+| Optimize for | using a visual interface you can:<br> Create data preparation pipelein, perfrom data analysis, transfrom data using built-in transforms.<br>Optimized for tabular data tasks such as handling missing values, encoding categorical variables and applying data transformations. | For users whose data resides in RedShift, Athena, or S3 and want to combine exploratory SQL and Python for data analysis. | For users who prefer serverless expereince with automatic resource provisioning and terminiation for scaling short-running workloads revolving around Apache Spark |
+
