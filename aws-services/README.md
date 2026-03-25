@@ -255,6 +255,13 @@ Happy HealthCare decided to use AWS Lake Formation ML Transforms to identify the
   * Batch Ingestion
     * Allows you to use tools like SageMaker Data Wrangler to create features and then export a notebook that can be used to ingest the features in batches into a feature group.
     * This method supports both offline and online ingestion, depending on the configuration of the feature group.
+   
+#### SageMaker Processing
+
+* Refers to SageMaker's capabilities to run data pre and post processing, feature engineering,a nd model evaluation tasks on SageMakers fully-managed infrastructure. These tasks are executed as processing jobs.
+* Using SageMaker Processing API, data scientists can run scripts and notebooks to process, transform, and analyze datasets to prepare them for machine learning.
+* The following diagram shows how Amazon SageMaker AI spins up a Processing job. Amazon SageMaker AI takes your script, copies your data from S3, and then pulls a processing container. The underlying infrastructure for a Processing Job is fully managed by SageMaker. The output of the job is stored in S3 you specify.
+  ![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/Processing-1.png)
 
 #### SageMaker JumpStart
 
