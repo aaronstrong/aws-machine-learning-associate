@@ -143,13 +143,13 @@ The training stage of the full machine learning (ML) lifecycle spans from access
 ![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/sagemaker-training.png)
 
 If using SageMaker AI for the first time and want to find a quick ML solution to train a model on your dataset, considering using a no-code or low-code solution such as
-* **SageMaker Canvas** - is a no-code visual interface that enables business analysts and non-technical users to build, train, and deploy machine learing models without writing code.
+* **[SageMaker Canvas](https://docs.aws.amazon.com/sagemaker/latest/dg/canvas.html)** - is a no-code visual interface that enables business analysts and non-technical users to build, train, and deploy machine learing models without writing code.
   * Key Use case: Business predictions (eg: forecasting sales, predicting churn, inventory management)
   * Data Types: Supports tabular, image and text data.
-* **SageMaker AutoPiplot** - is an automated machine learning (AutoML) tool that automatically builds, trains,a nd tunes top-performing models based on your tabular data, while offering full transparancy.
+* **[SageMaker AutoPiplot](https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development.html)** - is an automated machine learning (AutoML) tool that automatically builds, trains,a nd tunes top-performing models based on your tabular data, while offering full transparancy.
   * Key Use Case: Automating the entire machine learning pipeline - preprocessing, training, and tuning - to find the best model.
   * Best For: Users hwo have data science knowledge but want to automate the manual, repetitive steps of ML.
-* **SageMaker JumpStart** - Is a machine learning hub that provides pre-trained models, curated soluations, and sample notebooks, allowing users to deploy and fine-tune models with a few clicks.
+* **[SageMaker JumpStart](https://docs.aws.amazon.com/sagemaker/latest/dg/studio-jumpstart.html)** - Is a machine learning hub that provides pre-trained models, curated soluations, and sample notebooks, allowing users to deploy and fine-tune models with a few clicks.
   * Key Use Case - Rapidly deploing open-source or pre-trained models (like LLMs, Image classification) and fine-tuning them on specific data.
   * Best For: Accessing foundation models and quickly accelerating the development lifecycle.
   * Key Feature: Built-in "model zoo" from sources like TensorFlow, PyTorch, and Hugging Face.
@@ -166,15 +166,15 @@ There are a number of scenarios of setting up data resources and access you need
 
 ![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/training-before.png)
 
-* **Prepare data**: Before training, you must have finished data cleaning and feature engineering during the data preparation stage. SageMaker AI has several labeling and feature engineering tools to help you. See Label Data, [Prepare and Analyze Datasets](), [Process Data](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/Processing-1.png), and [Create, Store, and Share Features](https://github.com/aaronstrong/aws-machine-learning-associate/tree/main/aws-services#sagemaker-feature-store) for more information.
+* **Prepare data**: Before training, you must have finished data cleaning and feature engineering during the data preparation stage. SageMaker AI has several labeling and feature engineering tools to help you. See Label Data, [Prepare and Analyze Datasets](https://github.com/aaronstrong/aws-machine-learning-associate/blob/main/domain1/README.md#recommended-features), [Process Data](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/Processing-1.png), and [Create, Store, and Share Features](https://github.com/aaronstrong/aws-machine-learning-associate/tree/main/aws-services#sagemaker-feature-store) for more information.
 * **Choose an Algorithm or framework**: There are different options for algorithms and frameworks.
-  * If you prefer low-code implementations of a pre-built algorithm, use one of the built-in algorithms offered by SageMaker
+  * If you prefer low-code implementations of a pre-built algorithm, use one of the built-in algorithms offered by SageMaker. [Choose an Algorithm](https://docs.aws.amazon.com/sagemaker/latest/dg/algorithms-choose.html)
   * If you need more flexibility to customize your model, run your training script using your preferred frameworks and toolkiets within SageMaker AI, use ML Frameworks and Toolkits.
-  * To extend pre-built SageMaker AI Docker images as the base image of your own container, see Use pre-built SageMaker AI Docker Images.
-  * To bring yoru custom Docker container to SageMaker, see Adapting your own Docker container to work with SageMaker AI. You need to install the sagemaker-training-toolkit to your container.
+  * To extend pre-built SageMaker AI Docker images as the base image of your own container, see [Use pre-built SageMaker AI Docker Images](https://docs.aws.amazon.com/sagemaker/latest/dg/docker-containers-prebuilt.html).
+  * To bring yoru custom Docker container to SageMaker, see [Adapting your own Docker container to work with SageMaker AI](https://docs.aws.amazon.com/sagemaker/latest/dg/docker-containers-adapt-your-own.html). You need to install the sagemaker-training-toolkit to your container.
 * **Manage data storage**: Understanding mapping between the data storage ( S3, EFS, FSx) and the training container that runs in the Ec2 compute instance. SageMaker helps map the storage paths and the local paths in the training container. After mapping is done, consider using one of the data transmission modes: File, Pipe and FastFile mode.
-* **Set up access to training data**: Use SageMaker Ai domain, a domain user profile, IAM, Amazon VPC, and AWS KMS to meet the requirements of the most security-sensitive orgs.
-* **Stream your input data**: SageMaker provides three data input modes: *File*, *Pipe*, *FastFile*. The default input mode is File mode, which loads the entire dataset during initializing the training job.
+* **Set up access to training data**: Use [SageMaker AI domain](https://docs.aws.amazon.com/sagemaker/latest/dg/gs-studio-onboard.html), a domain user profile, IAM, Amazon VPC, and AWS KMS to meet the requirements of the most security-sensitive orgs.
+* **Stream your input data**: SageMaker provides [three data input modes](https://docs.aws.amazon.com/sagemaker/latest/dg/model-access-training-data.html): *File*, *Pipe*, *FastFile*. The default input mode is File mode, which loads the entire dataset during initializing the training job.
 * **Analyze your data for bias**: Before training, you can analyze your dataset and model for bias against a disfavored group so that you can check that your model learns an unbiased dataset using SageMaker Clarify.
 * **Choose which SageMaker SDK to use**: There are two ways to launch a training job in SageMaker AI: using the high-level SageMaker AI PYthon SDK, or using the low-level SageMaker APIs for the SDK for Python (Boto3) or the AWS CLI.
 
@@ -185,12 +185,14 @@ During training, you need to continuously improve training stability, training s
 
 ![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/training-during.png)
 
-* **Set up infrastructure**
-* **Run a training job from a local code**
-* **Tracking Training jobs**
-* **Distributed training**
-* **Model hyperparameter tuning**
-* **Checkpointing and cost savings with Spot instances**
+* **Set up infrastructure** - Choose the rgiht instancy type and infrastructure management tools for your use case. 
+* **Run a training job from a local code** - You can annotate your local code wiht a remote decorator to run your code as a SageMaker training job from inside Amazon SageMaker Studio Classic and SageMaker Notebook, or from your local integrated development environment.
+* **Tracking Training jobs** - Monitor and track your training jobs using SageMaker Experiments, SageMaker Debugger, or Amazon CloudWatch. You can watch the model performance in terms of accuracy and convergence and run comparative analysis of metrics between multiple training jobs by using SageMaker Experiements. You can watch the compute resource utilization rate by using SageMaker Debuuger's profiling tool or Amazon CloudWatch.
+  * [Profile Training Jobs using Amazon SageMaker Debugger](https://docs.aws.amazon.com/sagemaker/latest/dg/debugger-profile-training-jobs.html)
+* **Distributed training** - If your training job is going into a stable stage without breaking due to misconfiguration of the training infrastructure or out-of-memory issues, you might want to find more options to scale your job and urn over an extended period of time for days and even months. When you're ready to scale up, consider distributed training. SageMaker provides options for distributed computation form light ML workloads to have deep learning workloads.
+* **Model hyperparameter tuning** - Tune your model hyperparameters using [Automatic Model Tuning (AMT) with SageMaker](https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning.html). SageMaker provides hyperparameter tuning methods such as grid search and Bayseain search, launching parrallel hyperparameter tuning jobs with early-stopping functionality for non-imrpvoing hyperparameter jobs.
+  * AMT finds the best version of a model by running many training jobs on your dataset. Amazon SageMaker automatic model tuning (AMT) is also known as hyperparameter tuning. To do this, AMT uses the algorithm and ranges of hyperparameters that you specify. It then chooses the hyperparameter values that creates a model that performs the best, as measured by a metric that you choose.
+* **Checkpointing and cost savings with Spot instances** - If training time is not a big concern, you might consider optimizing model training costs with managed Spot Instances. Note that you must activate checkpointing for Spot training to keep restoring from intermittenet job pauses due to Spot instance replacements. AKA, [checkpoints](https://docs.aws.amazon.com/sagemaker/latest/dg/model-checkpoints.html).
 
 #### After Training
 
@@ -198,9 +200,14 @@ After training, you obtain a final model artifact to use for model deployment an
 
 ![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/training-after.png)
 
-* **Obtain baseline model**
-* **Examine model performance and check for bias**
-* You can also use the Incremental Training funcationality of SageMaker to load and update your model (or fine-tune) with an expanded dataset.
+* **Obtain baseline model** - After you have the model artifact, you can set it as a baseline model. Consider the following post-training actions and using SageMaker AI features before moving on to model deployment to production.
+* **Examine model performance and check for bias** - use Amazon CloudWatch and SageMaker Clarify for post-training bias to detect any bias in incoming data and model over time against the baseline. You need to evaluate your new data and model prediction against the new data regularly or in real time. Using these features, you can receive alerts about any acute change or anomalies, as well as gradual changes or drifts in data and model.
+* You can also use the [Incremental Training](https://docs.aws.amazon.com/sagemaker/latest/dg/incremental-training.html) funcationality of SageMaker to load and update your model (or fine-tune) with an expanded dataset.
+  * **Incremental Training** - Overtime, you might find that a model generates inference that are not as good as they were in the past. with incremental training, you can use the artifacts from an existing model and use an expanded dataset to train a new model. Incremental training save both time and resources.
+    * Training a new model using an expanded dataset that contains an underlying pattern that was not accounted for in the previous training and which resulted in poort model performance.
+    * Use the model artifacts or a portion of the model artifacts from a popular publicly available model in a training job. You don't need to train a new model from scratch.
+    * Resume a training job tha was stopped.
+    * Train several variants of a model, either with different hyperparameter settings or using different datasets.
 * You can register model training as a step in your SageMaker Pipeline or as part of the Workflow features offered by SageMaker in order to orchestrate the full ML lifecycle.
 
 
