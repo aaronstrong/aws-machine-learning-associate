@@ -166,7 +166,7 @@ There are a number of scenarios of setting up data resources and access you need
 
 ![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/training-before.png)
 
-* **Prepare data**: Before training, you must have finished data cleaning and feature engineering during the data preparation stage. SageMaker AI has several labeling and feature engineering tools to help you. See Label Data, Prepare and Analyze Datasets, Process Data, and Create, Store, and Share Features for more information.
+* **Prepare data**: Before training, you must have finished data cleaning and feature engineering during the data preparation stage. SageMaker AI has several labeling and feature engineering tools to help you. See Label Data, [Prepare and Analyze Datasets](), [Process Data](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/Processing-1.png), and [Create, Store, and Share Features](https://github.com/aaronstrong/aws-machine-learning-associate/tree/main/aws-services#sagemaker-feature-store) for more information.
 * **Choose an Algorithm or framework**: There are different options for algorithms and frameworks.
   * If you prefer low-code implementations of a pre-built algorithm, use one of the built-in algorithms offered by SageMaker
   * If you need more flexibility to customize your model, run your training script using your preferred frameworks and toolkiets within SageMaker AI, use ML Frameworks and Toolkits.
