@@ -197,7 +197,7 @@ By default, Studio runs in an AWS managed VPC with internet access. When using a
 
 ### *VPN Only* Communication with the Internet
 
-To stop SageMaker AI from providing internet access to your Studio notebooks, disable internet access by specifying the VPC only network access type. Specify this network access type when you onboard to Studio or call the CreateDomain API. As a result, you won't be able to run a Studio notebook unless:
+To stop SageMaker AI from providing internet access to your **SageMaker Domain, Studio, or Notebook Instances**, disable internet access by specifying the VPC only network access type. Specify this network access type when you onboard to Studio or call the CreateDomain API. As a result, you won't be able to run a Studio notebook unless:
 
 * your VPC has an interface endpoint to the SageMaker API and runtime, or a NAT gateway with internet access
 * your security groups allow outbound connections
@@ -206,4 +206,18 @@ The following diagram shows a configuration for using VPC-only mode.
 
 ![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/studio/studio-vpc-private.png)
 
+### Network Isolation
 
+"Network Isolation" is a specific parameter that can be enabled for SageMaker training jobs, processing jobs, or deployed models.
+
+* **Container Restriction** - when enabled, the running container has no network access at all (inbound or outbound), which adds a strong layer of security, particularly for highly sensitive workloads or when using models form the AWS Marketplace.
+* **Data Access** - Data access and logging h appens on the server side in isolation from the container itself.
+* **Puprose** - The primary goal is to ensure that the model or job cannot exfiltrate data or connect to unintended external resources. A separate server processes hanldes the legitimate inference requests, but the model container remains cut off rom the netowrk.
+
+| Feature | VPC Only Mode | Network Isoliation |
+| --- | --- | --- |
+| Scope | Configured at the SageMaker Domain or Notebook instance level | A specific boolean parameter set for individual training jobs, processing jobs, or models |
+| Network Access | Allows managed and controlled network access within your VPC and to other services via VPC endpoints | Explicitly blocks all inbound and outbound network calls to/from the container, including calls to other AWS services |
+| Internet Access | No internet access by default, but can be enabled with a NAT gateway | No internet access, and no way to add it for the container process itself. |
+
+*Note: you can use both together for maximum security*
