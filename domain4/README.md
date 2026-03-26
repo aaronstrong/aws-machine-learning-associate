@@ -189,3 +189,21 @@ You then specify an amount of traffic to go to a specific model.
 * Monitor SageMaker using CloudWatch, which collects raw data and porcesses it into readable, near real-time metrics
 * Set alarms to watch for certain thresholds and take actions when those thresholds are met.
 
+## Building VPCs, subnets, and security groups to securely isolate ML systems
+
+By default, Studio runs in an AWS managed VPC with internet access. When using an internet connection, Studio accesses AWS resources, such as Amazon S3 buckets, over the internet. However, if you have security requirements to control access to your data and job containers, we recommend that you configure Studio and your data store (Amazon Redshift or Athena) so that your data and containers aren’t accessible over the internet. To control access to your resources or run Studio without public internet access, you can specify the *VPC only* network access type when you onboard to Amazon SageMaker AI domain.
+
+![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/studio/studio-vpc-internet.png)
+
+### *VPN Only* Communication with the Internet
+
+To stop SageMaker AI from providing internet access to your Studio notebooks, disable internet access by specifying the VPC only network access type. Specify this network access type when you onboard to Studio or call the CreateDomain API. As a result, you won't be able to run a Studio notebook unless:
+
+* your VPC has an interface endpoint to the SageMaker API and runtime, or a NAT gateway with internet access
+* your security groups allow outbound connections
+
+The following diagram shows a configuration for using VPC-only mode.
+
+![](https://docs.aws.amazon.com/images/sagemaker/latest/dg/images/studio/studio-vpc-private.png)
+
+
