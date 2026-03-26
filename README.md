@@ -33,6 +33,8 @@
 ## Helpful Links
 
 * https://github.com/FabG/ml-aws-specialty-lab?tab=readme-ov-file
+* https://psychedelic-cuticle-e74.notion.site/AWS-Machine-Learning-Engineer-Associate-MLA-C01-19686c7395e780e1bab0eac37d0401a0
+* https://tutorialsdojo.com/aws-certified-machine-learning-specialty-mls-c01-sample-exam-questions/
 
 
 ## ML LifeCycle Architecture diagrams
