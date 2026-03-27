@@ -164,7 +164,7 @@ Skills in:
 | Real-time hosted endpoint | Real-time | 6 MB / request | 60 seconds | $$$$$ |
 | Serverless endpoint | Cold Start | 4 MB / request | 60 seconds | $$$ |
 | Asynchronous endpoint | Near real-time | 1 GB / request | 60 minutes | $$<br>auto-scale to 0 |
-| Batch Inference | Offline processing | 100 MB / request | 60 minutes | $ |
+| Batch Inference | Offline processing | 100 MB / request | Days | $ |
 
 
 ## Choosing the appropriate compute environment for training
